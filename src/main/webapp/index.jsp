@@ -20,14 +20,7 @@
     </div>
   </nav>
   <div class="container"> 
-    <!-- <div class="input-group">
-      <span class="input-group-addon">$</span>
-      <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-      <span class="input-group-addon">.00</span>
-    </div> -->
-    <!-- <div class="input-group">
-      <input type="text" class="form-control" aria-label="Client id">
-    </div> -->
+
     <br>
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-4">
@@ -42,17 +35,26 @@
 
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Consultar saldo</h4>
-            </div>
-            <div class="modal-body">
-              <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-            </div>
+            <form method="post" action="balance">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Consultar saldo</h3>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="control-label" for="account">Número de cuenta</label>
+                  <div class="input-group">
+                    <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  </div>
+
+                </div>
+              </div>  
+              <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-info">Consultar saldo</button>
+              </div>
+            </form>
           </div>
 
         </div>
@@ -70,17 +72,35 @@
 
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Ingresar dinero</h4>
-            </div>
-            <div class="modal-body">
-              <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-            </div>
+            <form method="post" action="efectivo">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Ingresar dinero</h3>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="control-label" for="account">Número de cuenta</label>
+                  <div class="input-group">
+                    <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="amount">Cantidad</label>
+                  <div class="input-group">
+                    <input type="number" id="amount" name="amount" class="form-control" placeholder="0">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-eur"></i></span>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" id="operation" name="operation" value="ingresar">
+
+              <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger">Ingresar</button>
+              </div>
+            </form>
           </div>
 
         </div>
@@ -98,22 +118,39 @@
 
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Retirar</h4>
-            </div>
-            <div class="modal-body">
-              <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-            </div>
+            <form method="post" action="efectivo">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Retirar</h3>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="control-label" for="account">Número de cuenta</label>
+                  <div class="input-group">
+                    <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="amount">Cantidad</label>
+                  <div class="input-group">
+                    <input type="number" id="amount" name="amount" class="form-control" placeholder="0">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-eur"></i></span>
+                  </div>
+                </div>
+                <input type="hidden" id="operation" name="operation" value="retirar">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger">Retirar</button>
+              </div>
+            </form>
           </div>
 
         </div>
       </div>
-      
+
       <div class="col-xs-12 col-sm-6 col-md-4">
         <a href="#" data-toggle="modal" data-target="#crear">
           <div class="panel panel-success">
@@ -126,22 +163,38 @@
 
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Crear cuenta nueva</h4>
-            </div>
-            <div class="modal-body">
-              <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
-              <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
-            </div>
+            <form method="post" action="crearcuenta">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Crear cuenta nueva</h3>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="control-label" for="username">Nombre del cliente</label>
+                  <div class="input-group">
+                    <input type="text" id="username" name="username" class="form-control" placeholder="">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="amount">Cantidad inicial</label>
+                  <div class="input-group">
+                    <input type="text" id="amount" name="amount" class="form-control" placeholder="0">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-eur"></i></span>
+                  </div>
+                </div>              
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Crear</button>
+              </div>
+            </form>
           </div>
 
         </div>
       </div>
-      
+
       <div class="col-xs-12 col-sm-6 col-md-4">
         <a href="#" data-toggle="modal" data-target="#borrar">
           <div class="panel panel-info">
@@ -154,17 +207,25 @@
 
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Borrar</h4>
-            </div>
-            <div class="modal-body">
-              <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-info" data-dismiss="modal">Aceptar</button>
-              <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-            </div>
+            <form method="post" action="borrarcuenta">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Borrar</h3>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="control-label" for="account">Número de cuenta</label>
+                  <div class="input-group">
+                    <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-info">Borrar cuenta</button>
+              </div>
+            </form>
           </div>
 
         </div>
@@ -181,17 +242,40 @@
 
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Transferir</h4>
-            </div>
-            <div class="modal-body">
-              <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-warning" data-dismiss="modal">Aceptar</button>
-              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-            </div>
+            <form method="post" action="transferencia">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Transferir</h3>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="control-label" for="origin">Número de cuenta de origen</label>
+                  <div class="input-group">
+                    <input type="number" id="origin" name="origin" class="form-control" placeholder="00000000">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="target">Número de cuenta de destino</label>
+                  <div class="input-group">
+                    <input type="number" id="target" name="target" class="form-control" placeholder="00000000">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="amount">Cantidad</label>
+                  <div class="input-group">
+                    <input type="number" id="amount" name="amount" class="form-control" placeholder="0">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-eur"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-info">Transferir</button>
+              </div>
+            </form>
           </div>
 
         </div>

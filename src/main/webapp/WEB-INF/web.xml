@@ -58,6 +58,7 @@
   	<description></description>
   	<servlet-class>servlets.TransferServlet</servlet-class>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>consultarsaldo</servlet-name>
     <url-pattern>/balance</url-pattern>
@@ -68,30 +69,15 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>crearcuenta</servlet-name>
-    <url-pattern>/crear</url-pattern>
+    <url-pattern>/crearcuenta</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>borrarcuenta</servlet-name>
-    <url-pattern>/borrar</url-pattern>
+    <url-pattern>/borrarcuenta</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>transferir</servlet-name>
     <url-pattern>/transferencia</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>EfectivoServlet</servlet-name>
-  	<url-pattern>/EfectivoServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>CrearServlet</servlet-name>
-  	<url-pattern>/CrearServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>BorrarServlet</servlet-name>
-  	<url-pattern>/BorrarServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>TransferServlet</servlet-name>
-  	<url-pattern>/TransferServlet</url-pattern>
-  </servlet-mapping>
+ 
 </web-app>
