@@ -1,4 +1,4 @@
-package clients;
+package model;
 
 public enum ServiceStatus {
 	OK,

@@ -8,12 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class BankClient implements BankClientI, Serializable {
+public class BankClient implements  Serializable, BankClientI {
 	
 	// Persistent Fields:
-	private static final long serialVersionUID = 01L;
+    private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue
  	private Long id;
 	private String name;
 	private float balance;
@@ -65,7 +65,7 @@ public class BankClient implements BankClientI, Serializable {
 	public String toString() {
 		return "Cliente: " +  this.name + 
 				". \n Saldo: " + this.balance + 
-				". \n Nº de cuenta: " + this.id + ".\n";
+				". \n NÂº de cuenta: " + this.id + ".\n";
 	}
 	
 

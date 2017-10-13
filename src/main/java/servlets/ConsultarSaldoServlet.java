@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import clients.BankClient;
@@ -23,20 +24,14 @@ public class ConsultarSaldoServlet extends HttpServlet {
 	        
 	  Long account = Long.parseLong(request.getParameter("account"));
 	  
-	  // Acceder a db
-	  // Buscar elemento con account number = account
-	  // Crear objeto bc
-	  // Mientras tanto se crea un objeto bc mock provisional
-	  
-//	  BankClient bc = new BankClient("SLP", (float) 3333.33); // provisional
-//	  bc.setAccount(account); // provisional
 	  ClientDAO dao = ClientImpl.getInstance();
       BankClient bc = dao.consultarSaldo(account);
-//	  String message = "Su operación se ha realizado con éxito";
+//	  String message = "Su operaciÃ³n se ha realizado con Ã©xito";
 	  String message = "";
 	  request.setCharacterEncoding("UTF-8");
 	  request.setAttribute("name", bc.getName());
-	  request.setAttribute("balance", bc.getBalance());
+	  DecimalFormat df = new DecimalFormat("#0.00"); 
+	  request.setAttribute("balance", df.format(bc.getBalance()));
 	  request.setAttribute("account", bc.getAccount());
 	  request.setAttribute("msg", message);
       request.getRequestDispatcher("/results.jsp").forward(request, response);       
@@ -52,7 +47,7 @@ public class ConsultarSaldoServlet extends HttpServlet {
 	  String res = "";
 	  for(BankClient bc : lista) {
           res += bc.toString();
-          res += "****************************************";
+          res += "****************************************\n";
       }
 		response.getWriter().append(res);
 

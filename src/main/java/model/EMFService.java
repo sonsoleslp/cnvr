@@ -14,9 +14,11 @@ public class EMFService {
 	private static final EntityManagerFactory emfInstance = Persistence
 			.createEntityManagerFactory("$objectdb/db/clients.odb");
 	private EMFService() {
+		com.objectdb.Enhancer.enhance("clients.*");
+
 	}
 	public static EntityManagerFactory get() {
-		com.objectdb.Enhancer.enhance("clients.*");
+		System.out.println(emfInstance);
 		return emfInstance;
 	}
 }

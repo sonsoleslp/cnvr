@@ -26,8 +26,10 @@ public class ClientImpl implements ClientDAO {
 	public BankClient crearCliente(String name, float amount) {
 		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
+		em.getTransaction().begin();
 		BankClient bc = new BankClient(name, amount);
 		em.persist(bc);
+		em.getTransaction().commit();
 		em.close();
 		System.out.println(bc.toString());
 		return bc;
@@ -45,9 +47,12 @@ public class ClientImpl implements ClientDAO {
 	public BankClient ingresar(Long primaryKey, float amount) {
 		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
+		em.getTransaction().begin();
 		BankClient bc = em.find(BankClient.class, primaryKey);
 		bc.setBalance(bc.getBalance()+amount);
 		em.merge(bc);
+		em.getTransaction().commit();
+
 		em.close();
 		return bc;
 	}
@@ -56,9 +61,13 @@ public class ClientImpl implements ClientDAO {
 	public BankClient retirar(Long primaryKey, float amount) {
 		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
+		em.getTransaction().begin();
+
 		BankClient bc = em.find(BankClient.class, primaryKey);
 		bc.setBalance(bc.getBalance()-amount);
 		em.merge(bc);
+		em.getTransaction().commit();
+
 		em.close();
 		return bc;
 	}
@@ -67,8 +76,10 @@ public class ClientImpl implements ClientDAO {
 	public BankClient borrar(Long primaryKey) {
 		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
+		em.getTransaction().begin();
 		BankClient bc = em.find(BankClient.class, primaryKey);
 		em.remove(bc);
+		em.getTransaction().commit();
 		em.close();
 		return bc;
 	}
@@ -77,12 +88,15 @@ public class ClientImpl implements ClientDAO {
 	public List<BankClient> transferir(Long origin, Long target, float amount) {
 		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
+		em.getTransaction().begin();
 		BankClient bc1 = em.find(BankClient.class, origin);
 		bc1.setBalance(bc1.getBalance()-amount);
 		em.merge(bc1);
 		BankClient bc2 = em.find(BankClient.class, target);
 		bc2.setBalance(bc2.getBalance()+amount);
 		em.merge(bc2);
+		em.getTransaction().commit();
+
 		em.close();
 		List<BankClient> lista = new ArrayList();
 		lista.add(bc1);

@@ -33,19 +33,14 @@ public class BorrarServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 Long account = Long.parseLong(request.getParameter("account"));
-		  // Acceder a db
-		  // Buscar elemento con account number = account
-		  // Crear objeto bc
-		  // Mientras tanto se crea un objeto bc mock provisional
-//		  BankClient bc = new BankClient("SLP", (float) 3333.33); // provisional
-//		  bc.setAccount(account); // provisional
+		  
 		  ClientDAO dao = ClientImpl.getInstance();
 		  BankClient bc = dao.borrar(account);
-//		  String message = "Su operación se ha realizado con éxito";
+//		  String message = "Su operaciÃ³n se ha realizado con Ã©xito";
 		  String message = "Se ha borrado su cuenta";
 		  request.setCharacterEncoding("UTF-8");
 		  request.setAttribute("name", bc.getName());
-		  DecimalFormat df = new DecimalFormat("#.00"); 
+		  DecimalFormat df = new DecimalFormat("#0.00"); 
 		  request.setAttribute("balance", df.format(bc.getBalance()));
 		  request.setAttribute("account", bc.getAccount());
 		  request.setAttribute("msg", message);

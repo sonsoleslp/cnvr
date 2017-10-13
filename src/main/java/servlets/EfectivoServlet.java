@@ -36,33 +36,27 @@ public class EfectivoServlet extends HttpServlet {
 		try {
 			account = Long.parseLong(request.getParameter("account"));
 		} catch(Exception e) {
-			response.getWriter().append("Cuenta errónea");
+			response.getWriter().append("Cuenta errÃ³nea");
 			return;
 		}
 		try {
 			amount =  Float.parseFloat(request.getParameter("amount"));
 		} catch (Exception e) {
-			response.getWriter().append("Cantidad errónea");
+			response.getWriter().append("Cantidad errÃ³nea");
 		}
 		ClientDAO dao = ClientImpl.getInstance();
 		String operation = request.getParameter("operation");
-		// Acceder a db
-		// Buscar elemento con account number = account
-		// Crear objeto bc
-		// Mientras tanto se crea un objeto bc mock provisional
-//		BankClient bc = new BankClient("SLP", (float) 3333.33); // provisional
-//		bc.setAccount((Long) account); // provisional
+		 
 		BankClient bc = null;
-		float newBalance = bc.getBalance();
 		if (operation.equals("ingresar")) {
 			bc = dao.ingresar(account, amount);
 		} else if (operation.equals("retirar")) {
 			bc = dao.retirar(account, amount);;
 		}
 		
-		DecimalFormat df = new DecimalFormat("#.00"); 
+		DecimalFormat df = new DecimalFormat("#0.00"); 
 
-		String message = "Su operación se ha realizado con éxito";
+		String message = "Su operaciÃ³n se ha realizado con Ã©xito";
 //		String message = "";
 		request.setCharacterEncoding("UTF-8");
 		request.setAttribute("name", bc.getName());

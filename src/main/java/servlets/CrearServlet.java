@@ -45,12 +45,12 @@ public class CrearServlet extends HttpServlet {
 		  } catch (Exception e) {}
 
 		  if (username == null) {
-			  username = "Anónimo";
+			  username = "AnÃ³nimo";
 		  }
 
           BankClient bc = dao.crearCliente(username, amount);
      
-		  String message = "Su operación se ha realizado con éxito";
+		  String message = "Su operaciÃ³n se ha realizado con Ã©xito";
 		  request.setCharacterEncoding("UTF-8");
 		  request.setAttribute("name", bc.getName());
 		  DecimalFormat df = new DecimalFormat("#.00"); 
@@ -61,7 +61,7 @@ public class CrearServlet extends HttpServlet {
 	      request.getRequestDispatcher("/results.jsp").forward(request, response);       
 	      
 //	      } catch (Exception e) {
-//	  		response.getWriter().append("Ha habido un error con su petición").append(e.toString());
+//	  		response.getWriter().append("Ha habido un error con su peticiï¿½n").append(e.toString());
 //
 //	      } 
 	}
