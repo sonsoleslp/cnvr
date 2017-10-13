@@ -1,29 +1,39 @@
 package clients;
 
-import java.util.Random;
+import java.io.Serializable;
 
-public class BankClient implements BankClientI {
-	private int account;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class BankClient implements BankClientI, Serializable {
+	
+	// Persistent Fields:
+	private static final long serialVersionUID = 01L;
+	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+ 	private Long id;
 	private String name;
 	private float balance;
 	
 	public BankClient(String name, float initialBalance) {
 		this.name = name;
 		this.balance = initialBalance;
-		Random r = new Random();
-		this.account = r.nextInt(100);
+
 	}
 	
 	@Override 
-	public int getAccount() {
+	public Long getAccount() {
 		// TODO Auto-generated method stub
-		return this.account;
+		return this.id;
 	}
 
 	@Override
-	public void setAccount(int account) {
+	public void setAccount(Long account) {
 		// TODO Auto-generated method stub
-		this.account = account;
+		this.id = account;
 	}
 
 	@Override
@@ -50,5 +60,13 @@ public class BankClient implements BankClientI {
 		// TODO Auto-generated method stub
 		this.balance = balance;
 	}
+	
+	@Override
+	public String toString() {
+		return "Cliente: " +  this.name + 
+				". \n Saldo: " + this.balance + 
+				". \n Nº de cuenta: " + this.id + ".\n";
+	}
+	
 
 }

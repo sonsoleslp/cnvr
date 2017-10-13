@@ -3,12 +3,15 @@ package servlets;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import clients.BankClient;
+import model.*;
 
 /**
  * Servlet implementation class CrearServlet
@@ -31,24 +34,36 @@ public class CrearServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
-		float amount =  Float.parseFloat(request.getParameter("amount"));
+		ClientDAO dao = ClientImpl.getInstance();
+//		try {
+		        
+		  String username = request.getParameter("username");
+		  float amount =  0;
+		  String initialAmount = request.getParameter("amount");
+		  try {
+			  amount = Long.parseLong(initialAmount);
+		  } catch (Exception e) {}
 
-		  // Acceder a db
-		  // Buscar elemento con account number = account
-		  // Crear objeto bc
-		  // Mientras tanto se crea un objeto bc mock provisional
-		  BankClient bc = new BankClient(username, (float) amount); // provisional
+		  if (username == null) {
+			  username = "Anónimo";
+		  }
+
+          BankClient bc = dao.crearCliente(username, amount);
+     
 		  String message = "Su operación se ha realizado con éxito";
-//		  String message = "";
 		  request.setCharacterEncoding("UTF-8");
-		  request.setAttribute("name", username);
+		  request.setAttribute("name", bc.getName());
 		  DecimalFormat df = new DecimalFormat("#.00"); 
-		  request.setAttribute("balance", df.format(amount));
+		  request.setAttribute("balance", df.format(bc.getBalance()));
 		  request.setAttribute("account", bc.getAccount());
 		  request.setAttribute("msg", message);
 		  request.setAttribute("icon", "ok");
-	      request.getRequestDispatcher("/results.jsp").forward(request, response);      
+	      request.getRequestDispatcher("/results.jsp").forward(request, response);       
+	      
+//	      } catch (Exception e) {
+//	  		response.getWriter().append("Ha habido un error con su petición").append(e.toString());
+//
+//	      } 
 	}
 
 }

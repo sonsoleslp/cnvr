@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import clients.BankClient;
+import model.ClientDAO;
+import model.ClientImpl;
 
 /**
  * Servlet implementation class EfectivoServlet
@@ -29,10 +31,10 @@ public class EfectivoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int account = 0;
+		Long account = (long) 0;
 		float amount = 0;
 		try {
-			account = Integer.parseInt(request.getParameter("account"));
+			account = Long.parseLong(request.getParameter("account"));
 		} catch(Exception e) {
 			response.getWriter().append("Cuenta errónea");
 			return;
@@ -42,20 +44,21 @@ public class EfectivoServlet extends HttpServlet {
 		} catch (Exception e) {
 			response.getWriter().append("Cantidad errónea");
 		}
+		ClientDAO dao = ClientImpl.getInstance();
 		String operation = request.getParameter("operation");
 		// Acceder a db
 		// Buscar elemento con account number = account
 		// Crear objeto bc
 		// Mientras tanto se crea un objeto bc mock provisional
-		BankClient bc = new BankClient("SLP", (float) 3333.33); // provisional
-		bc.setAccount(account); // provisional
+//		BankClient bc = new BankClient("SLP", (float) 3333.33); // provisional
+//		bc.setAccount((Long) account); // provisional
+		BankClient bc = null;
 		float newBalance = bc.getBalance();
 		if (operation.equals("ingresar")) {
-			newBalance = bc.getBalance() + amount;
+			bc = dao.ingresar(account, amount);
 		} else if (operation.equals("retirar")) {
-			newBalance = bc.getBalance() - amount;
+			bc = dao.retirar(account, amount);;
 		}
-		bc.setBalance(newBalance);
 		
 		DecimalFormat df = new DecimalFormat("#.00"); 
 

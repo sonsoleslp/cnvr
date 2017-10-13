@@ -58,6 +58,12 @@
   	<description></description>
   	<servlet-class>servlets.TransferServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>default</servlet-name>
+  	<display-name>MainServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlets.MainServlet</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>consultarsaldo</servlet-name>
@@ -79,5 +85,10 @@
     <servlet-name>transferir</servlet-name>
     <url-pattern>/transferencia</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>default</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
  
 </web-app>

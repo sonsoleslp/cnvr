@@ -1,8 +1,8 @@
 package clients;
 
 public interface BankClientI {
-	int getAccount();
-	void setAccount(int account);
+	Long getAccount();
+	void setAccount(Long account);
 	String getName();
 	void setName(String name);
 	float getBalance();
