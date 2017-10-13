@@ -1,4 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@page import="beans.ClientBean"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<html>
+<head>
+<meta charset='utf-8' />
 
 <html>
 <head>
@@ -32,11 +39,11 @@
             <div class="panel-body">
             
               <table class="table table-striped">
-                <tr><td><strong><span class="glyphicon glyphicon-user"></span> Nombre  </strong></td><td><%= request.getAttribute("name") %>
+                <tr><td><strong><span class="glyphicon glyphicon-user"></span> Nombre  </strong></td><td> <c:out value="${clientBean.name}"/> 
                 </td></tr>
-                <tr><td><strong><span class="glyphicon glyphicon-piggy-bank"></span> Nº de cuenta  </strong></td><td><%= request.getAttribute("account") %>
+                <tr><td><strong><span class="glyphicon glyphicon-piggy-bank"></span> Nº de cuenta  </strong></td><td><c:out value="${clientBean.account}"/>
 </td></tr>
-                <tr><td><strong><span class="glyphicon glyphicon-eur"></span> Saldo  </strong></td><td><%= request.getAttribute("balance") %> €
+                <tr><td><strong><span class="glyphicon glyphicon-eur"></span> Saldo  </strong></td><td><c:out value="${clientBean.balance}"/> €
 </td></tr>
               </table>
               <p id="msg"><span class="glyphicon glyphicon-<%= request.getAttribute("icon") %>"></span>  <%= request.getAttribute("msg") %></p>

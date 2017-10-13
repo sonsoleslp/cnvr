@@ -1,5 +1,10 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@page import="beans.ClientBean"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
 
+ 
 <html>
 <head>
   <title>CNVR</title>
@@ -33,20 +38,20 @@
             <div class="panel panel-danger"><div class="panel-body"><h5><strong>Cantidad transferida:</strong> <%= request.getAttribute("amount") %> €</h5></div></div>
             <h4>Cuenta origen</h4>
               <table class="table table-striped">
-                <tr><td><strong><span class="glyphicon glyphicon-user"></span> Nombre  </strong></td><td><%= request.getAttribute("name_o") %>
+				<tr><td class="col-xs-6"><strong><span class="glyphicon glyphicon-user"></span> Nombre  </strong></td><td> <c:out value="${clientBean1.name}"/> 
                 </td></tr>
-                <tr><td><strong><span class="glyphicon glyphicon-piggy-bank"></span> Nº de cuenta  </strong></td><td><%= request.getAttribute("account_o") %>
+                <tr><td class="col-xs-6"><strong><span class="glyphicon glyphicon-piggy-bank"></span> Nº de cuenta  </strong></td><td><c:out value="${clientBean1.account}"/>
 </td></tr>
-                <tr><td><strong><span class="glyphicon glyphicon-eur"></span> Saldo  </strong></td><td><%= request.getAttribute("balance_o") %> €
+                <tr><td class="col-xs-6"><strong><span class="glyphicon glyphicon-eur"></span> Saldo  </strong></td><td><c:out value="${clientBean1.balance}"/> €
 </td></tr>
               </table>
               <h4>Cuenta destino</h4>
               <table class="table table-striped">
-                <tr><td><strong><span class="glyphicon glyphicon-user"></span> Nombre  </strong></td><td><%= request.getAttribute("name_t") %>
+                <tr><td class="col-xs-6"><strong><span class="glyphicon glyphicon-user"></span> Nombre  </strong></td><td> <c:out value="${clientBean2.name}"/> 
                 </td></tr>
-                <tr><td><strong><span class="glyphicon glyphicon-piggy-bank"></span> Nº de cuenta  </strong></td><td><%= request.getAttribute("account_t") %>
+                <tr><td class="col-xs-6"><strong><span class="glyphicon glyphicon-piggy-bank"></span> Nº de cuenta  </strong></td><td><c:out value="${clientBean2.account}"/>
 </td></tr>
-                <tr><td><strong><span class="glyphicon glyphicon-eur"></span> Saldo  </strong></td><td><%= request.getAttribute("balance_t") %> €
+                <tr><td class="col-xs-6"><strong><span class="glyphicon glyphicon-eur"></span> Saldo  </strong></td><td><c:out value="${clientBean2.balance}"/> €
 </td></tr>
               </table>
               <p id="msg"><span class="glyphicon glyphicon-<%= request.getAttribute("icon") %>"></span>  <%= request.getAttribute("msg") %></p>

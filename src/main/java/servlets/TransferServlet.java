@@ -8,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import beans.ClientBean;
 import clients.BankClient;
 import model.ClientDAO;
 import model.ClientImpl;
@@ -49,14 +51,16 @@ public class TransferServlet extends HttpServlet {
 		String message = "Su transferencia se ha realizado con éxito";
 //		String message = "";
 		request.setCharacterEncoding("UTF-8");
+		ClientBean cb1 = new ClientBean(bc_origin);
+		ClientBean cb2 = new ClientBean(bc_target);
+		HttpSession session = request.getSession();
+		session.setAttribute("clientBean1", cb1);
+		session.setAttribute("clientBean2", cb2);
+		  
 		DecimalFormat df = new DecimalFormat("#0.00"); 
 		request.setAttribute("amount", df.format(amount));
-		request.setAttribute("name_o", bc_origin.getName());
-		request.setAttribute("balance_o", df.format(bc_origin.getBalance()));
-		request.setAttribute("account_o", bc_origin.getAccount());
-		request.setAttribute("name_t", bc_target.getName());
-		request.setAttribute("balance_t", df.format(bc_target.getBalance()));
-		request.setAttribute("account_t", bc_target.getAccount());
+
+		
 		request.setAttribute("msg", message);
 		request.setAttribute("icon", "ok");
 	    request.getRequestDispatcher("/transfer.jsp").forward(request, response);      		

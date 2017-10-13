@@ -9,7 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import beans.ClientBean;
 import clients.BankClient;
 import model.*;
 
@@ -34,6 +36,8 @@ public class CrearServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
+		
 		ClientDAO dao = ClientImpl.getInstance();
 //		try {
 		        
@@ -51,11 +55,11 @@ public class CrearServlet extends HttpServlet {
           BankClient bc = dao.crearCliente(username, amount);
      
 		  String message = "Su operación se ha realizado con éxito";
-		  request.setCharacterEncoding("UTF-8");
 		  request.setAttribute("name", bc.getName());
-		  DecimalFormat df = new DecimalFormat("#0.00"); 
-		  request.setAttribute("balance", df.format(bc.getBalance()));
-		  request.setAttribute("account", bc.getAccount());
+		  ClientBean cb = new ClientBean(bc);
+		  HttpSession session = request.getSession();
+		  session.setAttribute("clientBean", cb);
+		  System.out.println(username +" "+ bc.getName());
 		  request.setAttribute("msg", message);
 		  request.setAttribute("icon", "ok");
 	      request.getRequestDispatcher("/results.jsp").forward(request, response);       

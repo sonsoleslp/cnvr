@@ -7,7 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import beans.ClientBean;
 import clients.BankClient;
 import model.ClientDAO;
 import model.ClientImpl;
@@ -59,9 +61,9 @@ public class EfectivoServlet extends HttpServlet {
 		String message = "Su operación se ha realizado con éxito";
 //		String message = "";
 		request.setCharacterEncoding("UTF-8");
-		request.setAttribute("name", bc.getName());
-		request.setAttribute("balance", df.format(bc.getBalance()));
-		request.setAttribute("account", bc.getAccount());
+		ClientBean cb = new ClientBean(bc);
+		HttpSession session = request.getSession();
+		session.setAttribute("clientBean", cb);
 		request.setAttribute("msg", message);
 		request.setAttribute("icon", "ok");
 	    request.getRequestDispatcher("/results.jsp").forward(request, response);      		

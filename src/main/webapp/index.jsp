@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+
 <html>
 <head>
   <title>CNVR</title>
@@ -42,7 +45,7 @@
               </div>
               <div class="modal-body">
                 <div class="form-group">
-                  <label class="control-label" for="account">Número de cuenta</label>
+                  <label class="control-label" for="account">NÃºmero de cuenta</label>
                   <div class="input-group">
                     <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -79,7 +82,7 @@
               </div>
               <div class="modal-body">
                 <div class="form-group">
-                  <label class="control-label" for="account">Número de cuenta</label>
+                  <label class="control-label" for="account">NÃºmero de cuenta</label>
                   <div class="input-group">
                     <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -125,7 +128,7 @@
               </div>
               <div class="modal-body">
                 <div class="form-group">
-                  <label class="control-label" for="account">Número de cuenta</label>
+                  <label class="control-label" for="account">NÃºmero de cuenta</label>
                   <div class="input-group">
                     <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -214,7 +217,7 @@
               </div>
               <div class="modal-body">
                 <div class="form-group">
-                  <label class="control-label" for="account">Número de cuenta</label>
+                  <label class="control-label" for="account">NÃºmero de cuenta</label>
                   <div class="input-group">
                     <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -249,14 +252,14 @@
               </div>
               <div class="modal-body">
                 <div class="form-group">
-                  <label class="control-label" for="origin">Número de cuenta de origen</label>
+                  <label class="control-label" for="origin">NÃºmero de cuenta de origen</label>
                   <div class="input-group">
                     <input type="number" id="origin" name="origin" class="form-control" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="control-label" for="target">Número de cuenta de destino</label>
+                  <label class="control-label" for="target">NÃºmero de cuenta de destino</label>
                   <div class="input-group">
                     <input type="number" id="target" name="target" class="form-control" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
