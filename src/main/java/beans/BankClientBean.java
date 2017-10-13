@@ -9,20 +9,20 @@ import java.io.Serializable;
 
 import clients.BankClient;
 
-public class ClientBean implements  Serializable {
+public class BankClientBean implements  Serializable {
 	
  	private Long account;
 	private String name;
 	private String balance;
 	
-	public ClientBean(Long id, String name, float initialBalance) {
+	public BankClientBean(Long id, String name, float initialBalance) {
 		this.account = id;
 		this.name = name;
 		DecimalFormat df = new DecimalFormat("#0.00"); 
 		this.balance = df.format(initialBalance);
 
 	}
-	public ClientBean(BankClient bc) {
+	public BankClientBean(BankClient bc) {
 		this.name = bc.getName();
 		DecimalFormat df = new DecimalFormat("#0.00"); 
 		this.balance = df.format(bc.getBalance());

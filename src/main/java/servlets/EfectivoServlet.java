@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.ClientBean;
+import beans.BankClientBean;
 import clients.BankClient;
-import model.ClientDAO;
-import model.ClientImpl;
+import model.BankClientDAO;
+import model.BankClientImpl;
 
 /**
  * Servlet implementation class EfectivoServlet
@@ -46,7 +46,7 @@ public class EfectivoServlet extends HttpServlet {
 		} catch (Exception e) {
 			response.getWriter().append("Cantidad errónea");
 		}
-		ClientDAO dao = ClientImpl.getInstance();
+		BankClientDAO dao = BankClientImpl.getInstance();
 		String operation = request.getParameter("operation");
 		 
 		BankClient bc = null;
@@ -61,7 +61,7 @@ public class EfectivoServlet extends HttpServlet {
 		String message = "Su operación se ha realizado con éxito";
 //		String message = "";
 		request.setCharacterEncoding("UTF-8");
-		ClientBean cb = new ClientBean(bc);
+		BankClientBean cb = new BankClientBean(bc);
 		HttpSession session = request.getSession();
 		session.setAttribute("clientBean", cb);
 		request.setAttribute("msg", message);

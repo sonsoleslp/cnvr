@@ -8,16 +8,16 @@ import javax.persistence.Query;
 
 import clients.BankClient;
 
-public class ClientImpl implements ClientDAO {
+public class BankClientImpl implements BankClientDAO {
 	
 	//Singleton pattern
 	
-	private static ClientImpl instance;
-	private ClientImpl () {
+	private static BankClientImpl instance;
+	private BankClientImpl () {
 	}
-	public static ClientImpl getInstance() {
+	public static BankClientImpl getInstance() {
 		if (instance == null)
-			instance = new ClientImpl();
+			instance = new BankClientImpl();
 		return instance;
 	}
 	
@@ -31,7 +31,6 @@ public class ClientImpl implements ClientDAO {
 		em.persist(bc);
 		em.getTransaction().commit();
 		em.close();
-		System.out.println(bc.toString());
 		return bc;
 	}
 	

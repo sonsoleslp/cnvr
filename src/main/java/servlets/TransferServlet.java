@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.ClientBean;
+import beans.BankClientBean;
 import clients.BankClient;
-import model.ClientDAO;
-import model.ClientImpl;
+import model.BankClientDAO;
+import model.BankClientImpl;
 
 /**
  * Servlet implementation class TransferServlet
@@ -43,7 +43,7 @@ public class TransferServlet extends HttpServlet {
 		// Buscar elemento con account number = account
 		// Crear objeto bc
 
-		ClientDAO dao = ClientImpl.getInstance();
+		BankClientDAO dao = BankClientImpl.getInstance();
 		List<BankClient> lista = dao.transferir(origin, target, amount);
 		BankClient bc_origin = lista.get(0);
 		BankClient bc_target= lista.get(1);
@@ -51,8 +51,8 @@ public class TransferServlet extends HttpServlet {
 		String message = "Su transferencia se ha realizado con éxito";
 //		String message = "";
 		request.setCharacterEncoding("UTF-8");
-		ClientBean cb1 = new ClientBean(bc_origin);
-		ClientBean cb2 = new ClientBean(bc_target);
+		BankClientBean cb1 = new BankClientBean(bc_origin);
+		BankClientBean cb2 = new BankClientBean(bc_target);
 		HttpSession session = request.getSession();
 		session.setAttribute("clientBean1", cb1);
 		session.setAttribute("clientBean2", cb2);

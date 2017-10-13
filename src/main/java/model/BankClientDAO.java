@@ -10,7 +10,7 @@ import clients.BankClient;
  * @author Sonsoles
  *
  */
-public interface ClientDAO {
+public interface BankClientDAO {
 	
 	public BankClient crearCliente(String name, float amount);
  

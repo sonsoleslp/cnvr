@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.ClientBean;
+import beans.BankClientBean;
 import clients.BankClient;
-import model.ClientDAO;
-import model.ClientImpl;
+import model.BankClientDAO;
+import model.BankClientImpl;
 
 /**
  * Servlet implementation class BorrarServlet
@@ -36,12 +36,12 @@ public class BorrarServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		 Long account = Long.parseLong(request.getParameter("account"));
 		  
-		  ClientDAO dao = ClientImpl.getInstance();
+		  BankClientDAO dao = BankClientImpl.getInstance();
 		  BankClient bc = dao.borrar(account);
 //		  String message = "Su operación se ha realizado con éxito";
 		  String message = "Se ha borrado su cuenta";
 		  request.setCharacterEncoding("UTF-8");
-		  ClientBean cb = new ClientBean(bc);
+		  BankClientBean cb = new BankClientBean(bc);
 		  HttpSession session = request.getSession();
 		  session.setAttribute("clientBean", cb);
 		  request.setAttribute("msg", message);

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.ClientBean;
+import beans.BankClientBean;
 import clients.BankClient;
 import model.*;
 
@@ -38,7 +38,7 @@ public class CrearServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		
-		ClientDAO dao = ClientImpl.getInstance();
+		BankClientDAO dao = BankClientImpl.getInstance();
 //		try {
 		        
 		  String username = request.getParameter("username");
@@ -56,7 +56,7 @@ public class CrearServlet extends HttpServlet {
      
 		  String message = "Su operación se ha realizado con éxito";
 		  request.setAttribute("name", bc.getName());
-		  ClientBean cb = new ClientBean(bc);
+		  BankClientBean cb = new BankClientBean(bc);
 		  HttpSession session = request.getSession();
 		  session.setAttribute("clientBean", cb);
 		  System.out.println(username +" "+ bc.getName());

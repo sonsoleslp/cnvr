@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.ClientBean;
+import beans.BankClientBean;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,8 +16,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import clients.BankClient;
-import model.ClientDAO;
-import model.ClientImpl;
+import model.BankClientDAO;
+import model.BankClientImpl;
 
 public class ConsultarSaldoServlet extends HttpServlet {
 
@@ -28,12 +28,12 @@ public class ConsultarSaldoServlet extends HttpServlet {
 	        
 	  Long account = Long.parseLong(request.getParameter("account"));
 	  
-	  ClientDAO dao = ClientImpl.getInstance();
+	  BankClientDAO dao = BankClientImpl.getInstance();
       BankClient bc = dao.consultarSaldo(account);
 //	  String message = "Su operación se ha realizado con éxito";
 	  String message = "";
 	  request.setCharacterEncoding("UTF-8");
-	  ClientBean cb = new ClientBean(bc);
+	  BankClientBean cb = new BankClientBean(bc);
 	  HttpSession session = request.getSession();
 	  session.setAttribute("clientBean", cb);
 	  
@@ -46,7 +46,7 @@ public class ConsultarSaldoServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, 
       HttpServletResponse response)
       throws ServletException, IOException {
-	  ClientDAO dao = ClientImpl.getInstance();
+	  BankClientDAO dao = BankClientImpl.getInstance();
 	  List<BankClient> lista = dao.lista();
 	  String res = "";
 	  for(BankClient bc : lista) {
