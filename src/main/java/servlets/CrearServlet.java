@@ -53,7 +53,7 @@ public class CrearServlet extends HttpServlet {
 		  String message = "Su operación se ha realizado con éxito";
 		  request.setCharacterEncoding("UTF-8");
 		  request.setAttribute("name", bc.getName());
-		  DecimalFormat df = new DecimalFormat("#.00"); 
+		  DecimalFormat df = new DecimalFormat("#0.00"); 
 		  request.setAttribute("balance", df.format(bc.getBalance()));
 		  request.setAttribute("account", bc.getAccount());
 		  request.setAttribute("msg", message);
