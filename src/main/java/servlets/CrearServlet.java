@@ -59,7 +59,6 @@ public class CrearServlet extends HttpServlet {
 		  BankClientBean cb = new BankClientBean(bc);
 		  HttpSession session = request.getSession();
 		  session.setAttribute("clientBean", cb);
-		  System.out.println(username +" "+ bc.getName());
 		  request.setAttribute("msg", message);
 		  request.setAttribute("icon", "ok");
 	      request.getRequestDispatcher("/results.jsp").forward(request, response);       

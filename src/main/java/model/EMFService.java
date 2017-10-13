@@ -18,7 +18,6 @@ public class EMFService {
 
 	}
 	public static EntityManagerFactory get() {
-		System.out.println(emfInstance);
 		return emfInstance;
 	}
 }

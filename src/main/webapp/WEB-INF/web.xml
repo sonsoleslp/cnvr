@@ -4,6 +4,9 @@
 
 <web-app>
   <display-name>CNVR Práctica final</display-name>
+  <listener>
+    <listener-class>servlets.StartUpListener</listener-class>
+  </listener>
   
   <servlet>
     <servlet-name>consultarsaldo</servlet-name>

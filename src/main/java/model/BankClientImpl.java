@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import clients.BankClient;
-
 public class BankClientImpl implements BankClientDAO {
 	
 	//Singleton pattern
