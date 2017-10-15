@@ -51,7 +51,7 @@ public class ConsultarSaldoServlet extends HttpServlet {
 	  String res = "";
 	  for(BankClient bc : lista) {
           res += bc.toString();
-          res += "****************************************\n";
+          res += "\n****************************************\n";
       }
 		response.getWriter().append(res);
 

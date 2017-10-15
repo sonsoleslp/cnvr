@@ -66,7 +66,7 @@ public class BankClient implements  Serializable, BankClientI {
 	public String toString() {
 		return "Cliente: " +  this.name + 
 				". \n Saldo: " + this.balance + 
-				". \n Nº de cuenta: " + this.id + ".\n";
+				". \n Nº de cuenta: " + this.id + ".";
 	}
 	
 

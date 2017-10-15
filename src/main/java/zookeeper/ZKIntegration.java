@@ -1,8 +1,8 @@
 package zookeeper;
 import java.io.IOException;
-
 import org.apache.zookeeper.*;
-public class ZKIntegration  implements Watcher {
+
+public class ZKIntegration implements Watcher {
 	
 	static ZooKeeper zk = null;
     static Integer mutex;
