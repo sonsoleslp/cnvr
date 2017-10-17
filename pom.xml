@@ -83,15 +83,14 @@
        <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.3.0.v20150612</version>
+  				<version>9.4.7.v20170914</version>
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <httpConnector>
                         <port>3000</port>
                         <idleTimeout>60000</idleTimeout>
                     </httpConnector>
-                    <stopKey>foo</stopKey>
-                    <stopPort>${jetty.stop.port}</stopPort>
+                     
                 </configuration>
             </plugin>
     </plugins>
