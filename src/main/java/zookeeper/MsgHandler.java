@@ -9,11 +9,10 @@ public class MsgHandler {
 
 	public static void send(Operation op) {
 		try {
-			System.out.println("try");
 			byte[] msg = Operation.serialize(op);
-			System.out.println(op.toString());
+			System.out.println("ORIGINAL OPERATION" + op.toString());
 			Operation oo = (Operation) Operation.deserialize(msg);
-			System.out.println(oo.toString());
+			System.out.println("DESERIALIZED OPERATION" + oo.toString());
 			//send ? zookeeper
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

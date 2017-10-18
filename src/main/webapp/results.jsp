@@ -35,17 +35,22 @@ pageEncoding="UTF-8"%>
     <div class="row">
       <div class="col-xs-10 col-xs-push-1 col-md-push-2 col-md-8 col-lg-6 col-lg-push-3" id="results">
          <div class="panel panel-danger">
+         
+         
+   
+
             <div class="panel-heading">Resultado</div>
             <div class="panel-body">
-            
-              <table class="table table-striped">
-                <tr><td><strong><span class="glyphicon glyphicon-user"></span> Nombre  </strong></td><td> <c:out value="${clientBean.name}"/> 
-                </td></tr>
-                <tr><td><strong><span class="glyphicon glyphicon-piggy-bank"></span> Nº de cuenta  </strong></td><td><c:out value="${clientBean.account}"/>
-</td></tr>
-                <tr><td><strong><span class="glyphicon glyphicon-eur"></span> Saldo  </strong></td><td><c:out value="${clientBean.balance}"/> €
-</td></tr>
+            	<c:if test="${not empty clientBean}">
+	              <table class="table table-striped">
+	                <tr><td><strong><span class="glyphicon glyphicon-user"></span> Nombre  </strong></td><td> <c:out value="${clientBean.name}"/> 
+	                </td></tr>
+	                <tr><td><strong><span class="glyphicon glyphicon-piggy-bank"></span> Nº de cuenta  </strong></td><td><c:out value="${clientBean.account}"/>
+	</td></tr>
+	                <tr><td><strong><span class="glyphicon glyphicon-eur"></span> Saldo  </strong></td><td><c:out value="${clientBean.balance}"/> €
+	</td></tr>
               </table>
+              </c:if>
               <p id="msg"><span class="glyphicon glyphicon-<%= request.getAttribute("icon") %>"></span>  <%= request.getAttribute("msg") %></p>
             </div>
           </div>
@@ -66,7 +71,11 @@ pageEncoding="UTF-8"%>
  #back-button{
   font-size: 16px;}
 
-  
+  <c:if test="${not empty linethrough}">
+  	.table {
+  		text-decoration: line-through;
+  	}
+  </c:if>
   </style>
 </body>
 </html>

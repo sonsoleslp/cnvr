@@ -48,12 +48,15 @@ public class BankDBImpl implements BankI {
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
 		BankClient bc = em.find(BankClient.class, account);
-		bc.setBalance(bc.getBalance()+amount);
-		em.merge(bc);
-		em.getTransaction().commit();
-
-		em.close();
-		return bc;
+		if (bc != null) {
+			bc.setBalance(bc.getBalance()+amount);
+			em.merge(bc);
+			em.getTransaction().commit();
+	
+			em.close();
+			return bc;
+		}
+		return null;
 	}
 
 	@Override
@@ -63,12 +66,15 @@ public class BankDBImpl implements BankI {
 		em.getTransaction().begin();
 
 		BankClient bc = em.find(BankClient.class, account);
-		bc.setBalance(bc.getBalance()-amount);
-		em.merge(bc);
-		em.getTransaction().commit();
-
-		em.close();
-		return bc;
+		if (bc != null) {
+			bc.setBalance(bc.getBalance()-amount);
+			em.merge(bc);
+			em.getTransaction().commit();
+	
+			em.close();
+			return bc;
+		}
+		return null;
 	}
 
 	@Override
@@ -77,10 +83,14 @@ public class BankDBImpl implements BankI {
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
 		BankClient bc = em.find(BankClient.class, account);
-		em.remove(bc);
-		em.getTransaction().commit();
-		em.close();
-		return bc;
+		if (bc != null) {
+			em.remove(bc);
+			em.getTransaction().commit();
+			em.close();
+			
+			return bc;
+		}
+		return null;
 	}
 
 	@Override
@@ -89,17 +99,20 @@ public class BankDBImpl implements BankI {
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
 		BankClient bc1 = em.find(BankClient.class, origin);
-		bc1.setBalance(bc1.getBalance()-amount);
-		em.merge(bc1);
 		BankClient bc2 = em.find(BankClient.class, target);
-		bc2.setBalance(bc2.getBalance()+amount);
-		em.merge(bc2);
-		em.getTransaction().commit();
-		em.close();
-		List<BankClient> lista = new ArrayList();
-		lista.add(bc1);
-		lista.add(bc2);
-		return lista;
+		if (bc1 != null && bc2 != null ) {
+			bc1.setBalance(bc1.getBalance()-amount);
+			bc2.setBalance(bc2.getBalance()+amount);
+			em.merge(bc1);
+			em.merge(bc2);
+			em.getTransaction().commit();
+			em.close();
+			List<BankClient> lista = new ArrayList();
+			lista.add(bc1);
+			lista.add(bc2);
+			return lista;
+		}
+		return null;
 	}
 
 	public void populate(List<BankClient> all) {

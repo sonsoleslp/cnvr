@@ -34,17 +34,33 @@ public class BorrarServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		  Long account = Long.parseLong(request.getParameter("account"));
-		  BankClient bc = Bank.getBank().borrar(account);
-//		  String message = "Su operación se ha realizado con éxito";
-		  String message = "Se ha borrado su cuenta";
-		  request.setCharacterEncoding("UTF-8");
-		  BankClientBean cb = new BankClientBean(bc);
-		  HttpSession session = request.getSession();
-		  session.setAttribute("clientBean", cb);
-		  request.setAttribute("msg", message);
-		  request.setAttribute("icon", "ok");
-	      request.getRequestDispatcher("/results.jsp").forward(request, response);      
+		 Long account = (long) 0;
+		 int ok = 1;
+		 try {
+			account = Long.parseLong(request.getParameter("account"));
+		 } catch(Exception e) {
+			ok = 0;
+		 }
+		 BankClient bc = null;
+		 if (ok == 1) {
+			 bc = Bank.getBank().borrar(account);
+		 }	  
+		 String message = "Se ha borrado su cuenta";
+		 request.setCharacterEncoding("UTF-8");
+		 HttpSession session = request.getSession();
+		 if (bc != null && ok == 1) {
+			 BankClientBean cb = new BankClientBean(bc);
+			 session.setAttribute("clientBean", cb);
+			 request.setAttribute("msg", message);
+			 request.setAttribute("linethrough", true);
+			 request.setAttribute("icon", "ok");
+		 } else {
+			 session.setAttribute("clientBean", null);
+			 message= "La cuenta solicitada no existe";
+			 request.setAttribute("msg", message);
+			 request.setAttribute("icon", "remove");
+		 }
+		 request.getRequestDispatcher("/results.jsp").forward(request, response);      
 	}
 
 }

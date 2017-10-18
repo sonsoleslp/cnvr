@@ -47,7 +47,11 @@ public class CrearServlet extends HttpServlet {
 		  String initialAmount = request.getParameter("amount");
 		  try {
 			  amount = Long.parseLong(initialAmount);
-		  } catch (Exception e) {}
+			  if (amount < 0 ){ amount = 0; }
+		  } catch (Exception e) {
+			  amount = 0;
+		  }
+		  	
 
 		  if (username == null) {
 			  username = "Anónimo";

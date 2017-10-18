@@ -36,29 +36,56 @@ public class TransferServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Long origin = Long.parseLong(request.getParameter("origin"));
-		Long target = Long.parseLong(request.getParameter("target"));
-		float amount =  Float.parseFloat(request.getParameter("amount"));
-	  
-		List<BankClient> lista = Bank.getBank().transferir(origin, target, amount);
-		BankClient bc_origin = lista.get(0);
-		BankClient bc_target= lista.get(1);
+		int ok = 1;
+		Long origin = (long) 0;
 		
-		String message = "Su transferencia se ha realizado con éxito";
-//		String message = "";
+		try {
+			origin = Long.parseLong(request.getParameter("origin"));
+		} catch(Exception e) {
+			ok = 0;
+		}
+		Long target = (long) 0;
+		try {
+			origin = Long.parseLong(request.getParameter("target"));
+		} catch(Exception e) {
+			ok = 0;
+		}
+		float amount =  0;
+		try {
+			amount = Float.parseFloat(request.getParameter("amount"));
+			if (amount < 0) {
+				ok = 0;
+			}
+		} catch(Exception e) {
+			ok = 0;
+		}
+		
 		request.setCharacterEncoding("UTF-8");
-		BankClientBean cb1 = new BankClientBean(bc_origin);
-		BankClientBean cb2 = new BankClientBean(bc_target);
 		HttpSession session = request.getSession();
-		session.setAttribute("clientBean1", cb1);
-		session.setAttribute("clientBean2", cb2);
-		  
-		DecimalFormat df = new DecimalFormat("#0.00"); 
-		request.setAttribute("amount", df.format(amount));
 
+		String message = "Su transferencia se ha realizado con éxito";
+		List<BankClient> lista = null;
+		if (ok == 1) {
+			lista = Bank.getBank().transferir(origin, target, amount);
+		}
+		if (lista == null || lista.isEmpty() || ok == 0) {
+			request.setAttribute("icon", "remove");
+			message = "Ha habido un error con su petición";
+		} else {
+			BankClient bc_origin = lista.get(0);
+			BankClient bc_target= lista.get(1);
+			BankClientBean cb1 = new BankClientBean(bc_origin);
+			BankClientBean cb2 = new BankClientBean(bc_target);
+			session.setAttribute("clientBean1", cb1);
+			session.setAttribute("clientBean2", cb2);
+			  
+			DecimalFormat df = new DecimalFormat("#0.00"); 
+			request.setAttribute("amount", df.format(amount));
+			request.setAttribute("icon", "ok");
+		}
 		
 		request.setAttribute("msg", message);
-		request.setAttribute("icon", "ok");
+		
 	    request.getRequestDispatcher("/transfer.jsp").forward(request, response);      		
 	}
 

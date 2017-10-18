@@ -20,6 +20,7 @@ public class Bank implements BankI {
 		} 
 		return bank;
 	}
+	
 	@Override
 	public BankClient crearCliente(String name, float amount) {
 		// TODO Auto-generated method stub
@@ -32,28 +33,39 @@ public class Bank implements BankI {
 	@Override
 	public BankClient ingresar(Long account, float amount) {
 		// TODO Auto-generated method stub
-		Operation op = new Operation(Operations.INGRESAR, account , "", amount, 0L);
-		MsgHandler.send(op);
-		System.out.println("ingresar");
-		return BankDBImpl.getInstance().ingresar(account, amount);
+		BankDBImpl dao = BankDBImpl.getInstance();
+		if (dao.consultarSaldo(account) != null) {
+			Operation op = new Operation(Operations.INGRESAR, account , "", amount, 0L);
+			MsgHandler.send(op);
+			return dao.ingresar(account, amount);
+		}
+		return null;
 
 	}
 
 	@Override
 	public BankClient retirar(Long account, float amount) {
 		// TODO Auto-generated method stub
-		Operation op = new Operation(Operations.RETIRAR, account , "", amount, 0L);
-		MsgHandler.send(op);
-		return BankDBImpl.getInstance().retirar(account, amount);
+		BankDBImpl dao = BankDBImpl.getInstance();
+		if (dao.consultarSaldo(account) != null) {
+			Operation op = new Operation(Operations.RETIRAR, account , "", amount, 0L);
+			MsgHandler.send(op);
+			return dao.retirar(account, amount);
+		}
+		return null;
 	}
 
 	@Override
 	public BankClient borrar(Long account) {
 		// TODO Auto-generated method stub
-		Operation op = new Operation(Operations.BORRAR, account , "", 0, 0L);
-		MsgHandler.send(op);
 		BankDBImpl dao = BankDBImpl.getInstance();
-		return dao.borrar(account);
+		if (dao.consultarSaldo(account) != null) {
+			Operation op = new Operation(Operations.BORRAR, account , "", 0, 0L);
+			MsgHandler.send(op);
+			return dao.borrar(account);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -67,10 +79,14 @@ public class Bank implements BankI {
 	@Override
 	public List<BankClient> transferir(Long origin, Long target, float amount) {
 		// TODO Auto-generated method stub
-		Operation op = new Operation(Operations.TRANSFERIR, origin , "", amount, target);
-		MsgHandler.send(op);
+		
 		BankDBImpl dao = BankDBImpl.getInstance();
-	    return dao.transferir(origin, target, amount);
+		if (dao.consultarSaldo(origin) != null && dao.consultarSaldo(target) != null) {
+			Operation op = new Operation(Operations.TRANSFERIR, origin , "", amount, target);
+			MsgHandler.send(op);
+			return dao.transferir(origin, target, amount);
+	    }	
+		return null;
 	}
 
 	public void newSucursal() {

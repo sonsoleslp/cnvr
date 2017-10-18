@@ -35,36 +35,50 @@ public class EfectivoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Long account = (long) 0;
 		float amount = 0;
+		int ok = 1;
 		try {
 			account = Long.parseLong(request.getParameter("account"));
 		} catch(Exception e) {
-			response.getWriter().append("Cuenta errónea");
-			return;
+			ok = 0;
 		}
 		try {
 			amount =  Float.parseFloat(request.getParameter("amount"));
+			if (amount < 0 ) {
+				ok = 0;
+			}
 		} catch (Exception e) {
-			response.getWriter().append("Cantidad errónea");
+			ok = 0;
 		}
 		String operation = request.getParameter("operation");
+		DecimalFormat df = new DecimalFormat("#0.00"); 
+		request.setCharacterEncoding("UTF-8");
+		String message = "Su operación se ha realizado con éxito";
+		HttpSession session = request.getSession();
 		 
 		BankClient bc = null;
-		if (operation.equals("ingresar")) {
-			bc = Bank.getBank().ingresar(account, amount);
-		} else if (operation.equals("retirar")) {
-			bc = Bank.getBank().retirar(account, amount);
+		if (ok == 1) {
+			if (operation.equals("ingresar")) {
+				bc = Bank.getBank().ingresar(account, amount);
+			} else if (operation.equals("retirar")) {
+				bc = Bank.getBank().retirar(account, amount);
+			}
+		}
+		if (bc != null ) {
+			BankClientBean cb = new BankClientBean(bc);
+			session.setAttribute("clientBean", cb);
+			request.setAttribute("msg", message);
+			request.setAttribute("icon", "ok");
+		} else {		
+			session.setAttribute("clientBean", null);
+			message= "Ha habido un error con su petición";
+			request.setAttribute("msg", message);
+			request.setAttribute("icon", "remove");
 		}
 		
-		DecimalFormat df = new DecimalFormat("#0.00"); 
-
-		String message = "Su operación se ha realizado con éxito";
+		
 //		String message = "";
-		request.setCharacterEncoding("UTF-8");
-		BankClientBean cb = new BankClientBean(bc);
-		HttpSession session = request.getSession();
-		session.setAttribute("clientBean", cb);
+		
 		request.setAttribute("msg", message);
-		request.setAttribute("icon", "ok");
 	    request.getRequestDispatcher("/results.jsp").forward(request, response);      		
 	}
 

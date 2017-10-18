@@ -27,15 +27,31 @@ public class ConsultarSaldoServlet extends HttpServlet {
       HttpServletResponse response)
       throws ServletException, IOException {
 	        
-	  Long account = Long.parseLong(request.getParameter("account"));
+	  Long account = (long) 0;
+	  int ok = 1;
+		try {
+			account = Long.parseLong(request.getParameter("account"));
+		} catch(Exception e) {
+			ok = 0;
+		}
 	  
       BankClient bc = Bank.getBank().consultarSaldo(account);
-//	  String message = "Su operación se ha realizado con éxito";
-	  String message = "";
+	  String message = "Su operación se ha realizado con éxito";
 	  request.setCharacterEncoding("UTF-8");
-	  BankClientBean cb = new BankClientBean(bc);
 	  HttpSession session = request.getSession();
-	  session.setAttribute("clientBean", cb);
+	  if (bc != null  && ok == 1) {
+		  BankClientBean cb = new BankClientBean(bc);
+		  session.setAttribute("clientBean", cb);
+		  request.setAttribute("msg", message);
+		  request.setAttribute("icon", "ok");
+	  } else {
+		  session.setAttribute("clientBean", null);
+		  message= "La cuenta solicitada no existe";
+		  request.setAttribute("msg", message);
+		  request.setAttribute("icon", "remove");
+	  }
+	  
+	  
 	  
 	  request.setAttribute("msg", message);
       request.getRequestDispatcher("/results.jsp").forward(request, response);       
