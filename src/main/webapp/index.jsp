@@ -47,7 +47,7 @@ pageEncoding="UTF-8"%>
                 <div class="form-group">
                   <label class="control-label" for="account">Número de cuenta</label>
                   <div class="input-group">
-                    <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
+                    <input type="number" id="account" name="account" class="form-control firstinput" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   </div>
 
@@ -84,7 +84,7 @@ pageEncoding="UTF-8"%>
                 <div class="form-group">
                   <label class="control-label" for="account">Número de cuenta</label>
                   <div class="input-group">
-                    <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
+                    <input type="number" id="account" name="account" class="form-control firstinput" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   </div>
 
@@ -130,7 +130,7 @@ pageEncoding="UTF-8"%>
                 <div class="form-group">
                   <label class="control-label" for="account">Número de cuenta</label>
                   <div class="input-group">
-                    <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
+                    <input type="number" id="account" name="account" class="form-control firstinput" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   </div>
 
@@ -175,7 +175,7 @@ pageEncoding="UTF-8"%>
                 <div class="form-group">
                   <label class="control-label" for="username">Nombre del cliente</label>
                   <div class="input-group">
-                    <input type="text" id="username" name="username" class="form-control" placeholder="">
+                    <input type="text" id="username" name="username" class="form-control firstinput" placeholder="">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   </div>
 
@@ -219,7 +219,7 @@ pageEncoding="UTF-8"%>
                 <div class="form-group">
                   <label class="control-label" for="account">Número de cuenta</label>
                   <div class="input-group">
-                    <input type="number" id="account" name="account" class="form-control" placeholder="00000000">
+                    <input type="number" id="account" name="account" class="form-control firstinput" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   </div>
                 </div>
@@ -254,14 +254,14 @@ pageEncoding="UTF-8"%>
                 <div class="form-group">
                   <label class="control-label" for="origin">Número de cuenta de origen</label>
                   <div class="input-group">
-                    <input type="number" id="origin" name="origin" class="form-control" placeholder="00000000">
+                    <input type="number" id="origin" name="origin" class="form-control firstinput" placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label" for="target">Número de cuenta de destino</label>
                   <div class="input-group">
-                    <input type="number" id="target" name="target" class="form-control" placeholder="00000000">
+                    <input type="number" id="target" name="target" class="form-control " placeholder="00000000">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   </div>
 
@@ -302,6 +302,11 @@ pageEncoding="UTF-8"%>
     opacity: 0.7;
   }
   </style>
+  <script>
+  $('.modal').on('shown.bs.modal', function(e) { 
+	  $(e.target).find('.firstinput').focus()
+	});
+  </script>
 </body>
 </html>
 
