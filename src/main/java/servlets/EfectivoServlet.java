@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bank.Bank;
 import beans.BankClientBean;
 import clients.BankClient;
-import model.BankClientDAO;
-import model.BankClientImpl;
+import model.BankDBImpl;
 
 /**
  * Servlet implementation class EfectivoServlet
@@ -46,14 +46,13 @@ public class EfectivoServlet extends HttpServlet {
 		} catch (Exception e) {
 			response.getWriter().append("Cantidad errónea");
 		}
-		BankClientDAO dao = BankClientImpl.getInstance();
 		String operation = request.getParameter("operation");
 		 
 		BankClient bc = null;
 		if (operation.equals("ingresar")) {
-			bc = dao.ingresar(account, amount);
+			bc = Bank.getBank().ingresar(account, amount);
 		} else if (operation.equals("retirar")) {
-			bc = dao.retirar(account, amount);;
+			bc = Bank.getBank().retirar(account, amount);
 		}
 		
 		DecimalFormat df = new DecimalFormat("#0.00"); 

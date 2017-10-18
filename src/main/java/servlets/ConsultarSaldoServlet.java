@@ -16,8 +16,9 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import clients.BankClient;
-import model.BankClientDAO;
-import model.BankClientImpl;
+import bank.Bank;
+import bank.BankI;
+import model.BankDBImpl;
 
 public class ConsultarSaldoServlet extends HttpServlet {
 
@@ -28,8 +29,7 @@ public class ConsultarSaldoServlet extends HttpServlet {
 	        
 	  Long account = Long.parseLong(request.getParameter("account"));
 	  
-	  BankClientDAO dao = BankClientImpl.getInstance();
-      BankClient bc = dao.consultarSaldo(account);
+      BankClient bc = Bank.getBank().consultarSaldo(account);
 //	  String message = "Su operación se ha realizado con éxito";
 	  String message = "";
 	  request.setCharacterEncoding("UTF-8");
@@ -46,7 +46,7 @@ public class ConsultarSaldoServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, 
       HttpServletResponse response)
       throws ServletException, IOException {
-	  BankClientDAO dao = BankClientImpl.getInstance();
+	  BankI dao = BankDBImpl.getInstance();
 	  List<BankClient> lista = dao.lista();
 	  String res = "";
 	  for(BankClient bc : lista) {

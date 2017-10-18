@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bank.Bank;
 import beans.BankClientBean;
 import clients.BankClient;
-import model.BankClientDAO;
-import model.BankClientImpl;
+import model.BankDBImpl;
 
 /**
  * Servlet implementation class TransferServlet
@@ -39,12 +39,8 @@ public class TransferServlet extends HttpServlet {
 		Long origin = Long.parseLong(request.getParameter("origin"));
 		Long target = Long.parseLong(request.getParameter("target"));
 		float amount =  Float.parseFloat(request.getParameter("amount"));
-		// Acceder a db
-		// Buscar elemento con account number = account
-		// Crear objeto bc
-
-		BankClientDAO dao = BankClientImpl.getInstance();
-		List<BankClient> lista = dao.transferir(origin, target, amount);
+	  
+		List<BankClient> lista = Bank.getBank().transferir(origin, target, amount);
 		BankClient bc_origin = lista.get(0);
 		BankClient bc_target= lista.get(1);
 		

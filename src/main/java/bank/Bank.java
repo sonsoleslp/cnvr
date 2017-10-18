@@ -1,0 +1,97 @@
+package bank;
+
+import java.io.IOException;
+import java.util.List;
+
+import clients.BankClient;
+import model.BankDBImpl;
+import operations.*;
+import zookeeper.MsgHandler;
+import zookeeper.ZKIntegration;
+
+public class Bank implements BankI {
+	private static Bank bank;
+	
+	public Bank () {}
+	
+	public static Bank getBank() {
+		if (bank == null) {
+			bank = new Bank();
+		} 
+		return bank;
+	}
+	@Override
+	public BankClient crearCliente(String name, float amount) {
+		// TODO Auto-generated method stub
+		Operation op = new Operation(Operations.CREAR, 0L , name, amount, 0L);
+		MsgHandler.send(op);
+		BankDBImpl dao = BankDBImpl.getInstance();
+	    return dao.crearCliente(name, amount);
+	}
+
+	@Override
+	public BankClient ingresar(Long account, float amount) {
+		// TODO Auto-generated method stub
+		Operation op = new Operation(Operations.INGRESAR, account , "", amount, 0L);
+		MsgHandler.send(op);
+		System.out.println("ingresar");
+		return BankDBImpl.getInstance().ingresar(account, amount);
+
+	}
+
+	@Override
+	public BankClient retirar(Long account, float amount) {
+		// TODO Auto-generated method stub
+		Operation op = new Operation(Operations.RETIRAR, account , "", amount, 0L);
+		MsgHandler.send(op);
+		return BankDBImpl.getInstance().retirar(account, amount);
+	}
+
+	@Override
+	public BankClient borrar(Long account) {
+		// TODO Auto-generated method stub
+		Operation op = new Operation(Operations.BORRAR, account , "", 0, 0L);
+		MsgHandler.send(op);
+		BankDBImpl dao = BankDBImpl.getInstance();
+		return dao.borrar(account);
+	}
+
+	@Override
+	public BankClient consultarSaldo(Long account) {
+		// TODO Auto-generated method stub
+		// No se necesita operación
+		BankDBImpl dao = BankDBImpl.getInstance();
+	    return dao.consultarSaldo(account);
+	}
+
+	@Override
+	public List<BankClient> transferir(Long origin, Long target, float amount) {
+		// TODO Auto-generated method stub
+		Operation op = new Operation(Operations.TRANSFERIR, origin , "", amount, target);
+		MsgHandler.send(op);
+		BankDBImpl dao = BankDBImpl.getInstance();
+	    return dao.transferir(origin, target, amount);
+	}
+
+	public void newSucursal() {
+		BankDBImpl dao = BankDBImpl.getInstance();
+	    List<BankClient> list =  dao.lista();
+		Operation op = new Operation(Operations.ESTADO, list);
+		MsgHandler.send(op);
+	}
+	
+	
+	@Override
+	public void deleteAll() {
+		
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public List<BankClient> lista() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

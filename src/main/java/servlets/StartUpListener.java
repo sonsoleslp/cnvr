@@ -11,7 +11,6 @@ public class StartUpListener implements ServletContextListener {
         System.out.println("App initialized");
         // Código al inicializar la aplicación
         // Ej.: Conectar con zookeeper
-        System.out.println(e);
         ZKIntegration zki = new ZKIntegration("localhost:80");
 
     }

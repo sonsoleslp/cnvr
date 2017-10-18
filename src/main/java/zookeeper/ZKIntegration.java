@@ -2,6 +2,9 @@ package zookeeper;
 import java.io.IOException;
 import org.apache.zookeeper.*;
 
+import model.BankDBImpl;
+import operations.*;
+
 public class ZKIntegration implements Watcher {
 	
 	static ZooKeeper zk = null;
@@ -22,7 +25,9 @@ public class ZKIntegration implements Watcher {
             }
         }
 	}
-
+	
+	
+	
 	@Override
 	public void process(WatchedEvent arg0) {
 		// TODO Auto-generated method stub
