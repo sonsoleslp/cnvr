@@ -1,7 +1,6 @@
 package bank;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import clients.BankClient;
@@ -27,8 +26,7 @@ public class Bank implements BankI {
 		Operation op = new Operation(Operations.CREAR, 0L , name, amount, 0L);
 		MsgHandler.send(op);
 		BankDBImpl dao = BankDBImpl.getInstance();
-		BankClient bc = new BankClient(name, amount);
-	    return bc;
+	    return dao.crearCliente(name, amount);
 	}
 
 	@Override
@@ -38,9 +36,7 @@ public class Bank implements BankI {
 		if (dao.consultarSaldo(account) != null) {
 			Operation op = new Operation(Operations.INGRESAR, account , "", amount, 0L);
 			MsgHandler.send(op);
-			BankClient bc = dao.consultarSaldo(account);
-			bc.setBalance(bc.getBalance()+amount);
-			return bc;
+			return dao.ingresar(account, amount);
 		}
 		return null;
 
@@ -50,25 +46,25 @@ public class Bank implements BankI {
 	public BankClient retirar(Long account, float amount) {
 		// TODO Auto-generated method stub
 		BankDBImpl dao = BankDBImpl.getInstance();
-		BankClient bc = dao.consultarSaldo(account);
-		if (bc != null) {
+		if (dao.consultarSaldo(account) != null) {
 			Operation op = new Operation(Operations.RETIRAR, account , "", amount, 0L);
 			MsgHandler.send(op);
-			bc.setBalance(bc.getBalance()-amount);
+			return dao.retirar(account, amount);
 		}
-		return bc;
+		return null;
 	}
 
 	@Override
 	public BankClient borrar(Long account) {
 		// TODO Auto-generated method stub
 		BankDBImpl dao = BankDBImpl.getInstance();
-		BankClient bc = dao.consultarSaldo(account);
-		if (bc != null) {
+		if (dao.consultarSaldo(account) != null) {
 			Operation op = new Operation(Operations.BORRAR, account , "", 0, 0L);
 			MsgHandler.send(op);
-		} 
-		return bc;
+			return dao.borrar(account);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -84,17 +80,10 @@ public class Bank implements BankI {
 		// TODO Auto-generated method stub
 		
 		BankDBImpl dao = BankDBImpl.getInstance();
-		BankClient bc1 = dao.consultarSaldo(origin);
-		BankClient bc2 = dao.consultarSaldo(target);
-		if (bc1 != null && bc2 != null) {
+		if (dao.consultarSaldo(origin) != null && dao.consultarSaldo(target) != null) {
 			Operation op = new Operation(Operations.TRANSFERIR, origin , "", amount, target);
 			MsgHandler.send(op);
-			List<BankClient> list = new ArrayList<BankClient>();
-			bc1.setBalance(origin-amount);
-			bc2.setBalance(origin+amount);
-			list.set(0, bc1);
-			list.set(1, bc2);
-			return list;
+			return dao.transferir(origin, target, amount);
 	    }	
 		return null;
 	}

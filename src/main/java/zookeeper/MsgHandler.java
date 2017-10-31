@@ -13,21 +13,24 @@ public class MsgHandler {
 	
 	public static void sendToPath(Operation op, String path) {
 		try {
-			byte[] msg = Operation.serialize(op);
-			System.out.println("ORIGINAL OPERATION" + op.toString());
-			CounterLeader cl = new CounterLeader("");
-			cl.sendOperation(msg);
+ 			System.out.println("ORIGINAL OPERATION" + op.toString());
+			ZKIntegration cl = new ZKIntegration("");
+			cl.sendOperation(op);
  			//send ? zookeeper
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public static void receive(byte[] msg) throws ClassNotFoundException, IOException {
-		Operation op = (Operation) Operation.deserialize(msg);
-		System.out.println(op.toString());
-		Bank.getBank().externalOperation(op);
+	public static void receive(byte[] msg, String myId) throws ClassNotFoundException, IOException {
 		
+		Operation op = (Operation) Operation.deserialize(msg);
+		String id = op.getIp();
+		
+		System.out.println(op.toString());
+		if (!id.equals(myId)) {
+			Bank.getBank().externalOperation(op);
+		}
 	}
 	
 	

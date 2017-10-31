@@ -18,14 +18,14 @@ import operations.*;
  * ZKLeader + Counter
  *
  */
-public class CounterLeader implements Watcher {
+public class ZKIntegration implements Watcher {
 	private static final Boolean DEBUG = true;
 	private static int counter;
     static ZooKeeper zk = null;
     private final String PATH_ELECTION_ROOT = "/election";
     private final String PATH_OPERATION = "/operation";
     static Integer mutex;
-    private String myId;
+    private String myId = "";
     public static final Operation initialOperation = new Operation(Operations.ESTADO, null);
 	public static int listSize = 0;
     public static int getCounter() {
@@ -41,7 +41,7 @@ public class CounterLeader implements Watcher {
 	}
 
 	public static void setZk(ZooKeeper zk) {
-		CounterLeader.zk = zk;
+		ZKIntegration.zk = zk;
 	}
 
 	public String getMyId() {
@@ -56,7 +56,7 @@ public class CounterLeader implements Watcher {
 	 * Constructor de la clase
 	 * @param address IP address de Zookeeper
 	 */
-	public CounterLeader(String address) {
+	public ZKIntegration(String address) {
         
     }
     
@@ -133,7 +133,7 @@ public class CounterLeader implements Watcher {
             		case NodeDataChanged:
             			p("NodeDataChanged" + event.getPath());
 						byte[] dataLeader =	zk.getData(event.getPath(),true, null);
-						MsgHandler.receive(dataLeader);
+						MsgHandler.receive(dataLeader, myId);
 
             			break;   
             		case NodeDeleted:
@@ -222,7 +222,9 @@ public class CounterLeader implements Watcher {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public void sendOperation(byte[] op) throws KeeperException, InterruptedException, IOException, ClassNotFoundException {
+    public void sendOperation(Operation operation) throws KeeperException, InterruptedException, IOException, ClassNotFoundException {
+    	operation.setIp(myId);
+    	byte[] op = operation.serialize(operation);
     	String path = PATH_OPERATION;
     	Stat stat = zk.exists(path, this);
         while (true) {

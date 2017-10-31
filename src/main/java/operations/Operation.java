@@ -12,6 +12,7 @@ public class Operation implements Serializable {
 	private Operations operation;
 	private Long id;
 	private String name;
+	private String ip = "";
 	private float balance;
 	private Long other;
 	private List<BankClient> list;
@@ -109,6 +110,14 @@ public class Operation implements Serializable {
 
 	public void setList(List<BankClient> list) {
 		this.list = list;
+	}
+	
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 	public static byte[] serialize(Object obj) throws IOException {

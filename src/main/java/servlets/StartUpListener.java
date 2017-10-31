@@ -3,7 +3,7 @@ package servlets;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import zookeeper.CounterLeader;
+import zookeeper.ZKIntegration;
 
 public class StartUpListener implements ServletContextListener {
 
@@ -19,7 +19,7 @@ public class StartUpListener implements ServletContextListener {
         // Código al inicializar la aplicación
         // Ej.: Conectar con zookeeper
 //        ZKIntegration zki = new ZKIntegration("localhost:80");
-        CounterLeader cl = new CounterLeader("");
+        ZKIntegration cl = new ZKIntegration("");
         cl.init("192.168.1.52:2181");
 
     }
