@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +28,14 @@ public class MainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String ip = request.getRemoteAddr();
+		if (ip.equalsIgnoreCase("0:0:0:0:0:0:0:1")) {
+		    InetAddress inetAddress = InetAddress.getLocalHost();
+		    String ipAddress = inetAddress.getHostAddress();
+		    ip = ipAddress;
+		}
+		System.out.println(ip);
+		request.setAttribute("ip", ip);
 	    request.getRequestDispatcher("/index.jsp").forward(request, response);      		
 	}
 

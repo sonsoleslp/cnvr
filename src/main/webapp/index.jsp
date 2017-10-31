@@ -306,6 +306,7 @@ pageEncoding="UTF-8"%>
   $('.modal').on('shown.bs.modal', function(e) { 
 	  $(e.target).find('.firstinput').focus()
 	});
+  console.log("<%= request.getAttribute("ip") %> ");
   </script>
 </body>
 </html>
