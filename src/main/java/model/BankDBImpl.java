@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -116,15 +117,27 @@ public class BankDBImpl implements BankI {
 	}
 
 	public void populate(List<BankClient> all) {
+		try {
+		System.out.println(all);
+		System.out.println(all.size());
+		System.out.println("Populating DB");
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
 		em.createQuery("DELETE FROM BankClient e").executeUpdate();
-		for (all.iterator(); all.iterator().hasNext();) {
-            BankClient bc = all.iterator().next();
-    		em.persist(bc);
-		}
+		
+		Iterator<BankClient> iterator = all.iterator();
+		for (int i = 0; i < all.size(); i++) {
+			 BankClient bc = all.get(i);
+			 em.persist(bc);
+ 		}
+ 
+		
+		System.out.println("DONE");
 		em.getTransaction().commit();
-		em.close();
+		em.close(); 
+		} catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 	

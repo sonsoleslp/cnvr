@@ -7,8 +7,7 @@ import clients.BankClient;
 import model.BankDBImpl;
 import operations.*;
 import zookeeper.MsgHandler;
-import zookeeper.ZKIntegration;
-
+ 
 public class Bank implements BankI {
 	private static Bank bank;
 	
@@ -96,6 +95,31 @@ public class Bank implements BankI {
 		MsgHandler.send(op);
 	}
 	
+	public void externalOperation(Operation op) {
+		BankDBImpl dao = BankDBImpl.getInstance();
+		switch(op.getOperation()) {
+			case ESTADO:
+				dao.populate(op.getList());
+				break;
+			case CREAR:
+				dao.crearCliente(op.getName(), op.getBalance());
+				break;	
+			case BORRAR:
+				dao.borrar(op.getId());
+				break;
+			case INGRESAR:
+				dao.ingresar(op.getId(), op.getBalance());
+				break;
+			case RETIRAR:
+				dao.retirar(op.getId(), op.getBalance());
+				break;
+			case TRANSFERIR:
+				dao.transferir(op.getId(), op.getOther(), op.getBalance());
+				break;
+			default:
+				break;
+		}
+	}
 	
 	@Override
 	public void deleteAll() {
