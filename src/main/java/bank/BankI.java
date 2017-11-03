@@ -12,7 +12,7 @@ import clients.BankClient;
  */
 public interface BankI {
 	
-	public BankClient crearCliente(String name, float amount);
+	public BankClient crearCliente(Long id, String name, float amount);
  
 	public BankClient ingresar(Long account, float amount);
 	

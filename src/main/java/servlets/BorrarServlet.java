@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import bank.Bank;
 import beans.BankClientBean;
 import clients.BankClient;
-import model.BankDBImpl;
 
 /**
  * Servlet implementation class BorrarServlet
@@ -25,7 +23,6 @@ public class BorrarServlet extends HttpServlet {
      */
     public BorrarServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 
@@ -33,7 +30,6 @@ public class BorrarServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		 Long account = (long) 0;
 		 int ok = 1;
 		 try {

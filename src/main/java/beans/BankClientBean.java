@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 
 
-import java.io.Serializable;
 
 
 import clients.BankClient;
 
 public class BankClientBean implements  Serializable {
 	
- 	private Long account;
+	private static final long serialVersionUID = 1L;
+	private Long account;
 	private String name;
 	private String balance;
 	

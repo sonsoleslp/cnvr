@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import bank.Bank;
 import beans.BankClientBean;
 import clients.BankClient;
-import model.BankDBImpl;
 
 /**
  * Servlet implementation class EfectivoServlet
@@ -50,7 +48,6 @@ public class EfectivoServlet extends HttpServlet {
 			ok = 0;
 		}
 		String operation = request.getParameter("operation");
-		DecimalFormat df = new DecimalFormat("#0.00"); 
 		request.setCharacterEncoding("UTF-8");
 		String message = "Su operación se ha realizado con éxito";
 		HttpSession session = request.getSession();

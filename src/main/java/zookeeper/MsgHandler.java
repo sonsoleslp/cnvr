@@ -3,7 +3,6 @@ package zookeeper;
 import java.io.IOException;
 
 import bank.Bank;
-import model.BankDBImpl;
 import operations.Operation;
 public class MsgHandler {
 
@@ -16,9 +15,7 @@ public class MsgHandler {
  			System.out.println("ORIGINAL OPERATION" + op.toString());
 			ZKIntegration cl = new ZKIntegration("");
 			cl.sendOperation(op);
- 			//send ? zookeeper
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -27,7 +24,8 @@ public class MsgHandler {
 		Operation op = (Operation) Operation.deserialize(msg);
 		String id = op.getIp();
 		
-		System.out.println(op.toString());
+		System.out.println("Received operation: " + op.toString());
+		System.out.println("From " + myId + " to " + id);
 		if (!id.equals(myId)) {
 			Bank.getBank().externalOperation(op);
 		}

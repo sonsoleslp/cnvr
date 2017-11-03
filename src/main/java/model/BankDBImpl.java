@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -24,11 +23,10 @@ public class BankDBImpl implements BankI {
 	
 
 	@Override
-	public BankClient crearCliente(String name, float amount) {
-		// TODO Auto-generated method stub
+	public BankClient crearCliente(Long id, String name, float amount) {
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
-		BankClient bc = new BankClient(name, amount);
+		BankClient bc = new BankClient(id, name, amount);
 		em.persist(bc);
 		em.getTransaction().commit();
 		em.close();
@@ -45,7 +43,6 @@ public class BankDBImpl implements BankI {
 
 	@Override
 	public BankClient ingresar(Long account, float amount) {
-		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
 		BankClient bc = em.find(BankClient.class, account);
@@ -62,7 +59,6 @@ public class BankDBImpl implements BankI {
 
 	@Override
 	public BankClient retirar(Long account, float amount) {
-		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
 
@@ -80,7 +76,6 @@ public class BankDBImpl implements BankI {
 
 	@Override
 	public BankClient borrar(Long account) {
-		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
 		BankClient bc = em.find(BankClient.class, account);
@@ -96,36 +91,33 @@ public class BankDBImpl implements BankI {
 
 	@Override
 	public List<BankClient> transferir(Long origin, Long target, float amount) {
-		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
 		BankClient bc1 = em.find(BankClient.class, origin);
 		BankClient bc2 = em.find(BankClient.class, target);
+		List<BankClient> lista = new ArrayList<BankClient>();
+
 		if (bc1 != null && bc2 != null ) {
 			bc1.setBalance(bc1.getBalance()-amount);
 			bc2.setBalance(bc2.getBalance()+amount);
 			em.merge(bc1);
 			em.merge(bc2);
 			em.getTransaction().commit();
-			em.close();
-			List<BankClient> lista = new ArrayList();
 			lista.add(bc1);
 			lista.add(bc2);
-			return lista;
-		}
-		return null;
+ 		}
+		em.close();
+		return lista;
 	}
 
 	public void populate(List<BankClient> all) {
 		try {
-		System.out.println(all);
-		System.out.println(all.size());
 		System.out.println("Populating DB");
+		System.out.println(all);
 		EntityManager em = EMFService.get().createEntityManager();
 		em.getTransaction().begin();
-		em.createQuery("DELETE FROM BankClient e").executeUpdate();
+		em.createQuery("DELETE FROM BankClient").executeUpdate();
 		
-		Iterator<BankClient> iterator = all.iterator();
 		for (int i = 0; i < all.size(); i++) {
 			 BankClient bc = all.get(i);
 			 em.persist(bc);
@@ -143,19 +135,20 @@ public class BankDBImpl implements BankI {
 	
 	@Override
 	public void deleteAll() {
-		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
-		em.createQuery("DELETE FROM BankClient e").executeUpdate();
-		em.close();
+		em.getTransaction().begin();
+		em.createQuery("DELETE FROM BankClient").executeUpdate();
+		em.getTransaction().commit();
+		em.close(); 
 	
 
 	}
 	
 	@Override
 	public List<BankClient> lista(){
-		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em.createQuery("SELECT m FROM BankClient m");
+		@SuppressWarnings("unchecked")
 		List<BankClient> lista = new ArrayList <BankClient>(q.getResultList());
 		em.close();
 		System.out.println(lista);

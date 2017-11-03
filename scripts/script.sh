@@ -8,7 +8,3 @@ sudo apt-get update -y
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | sudo debconf-set-selections
 sudo apt-get install -y oracle-java8-installer
-JAVA_HOME=/usr/lib/jvm/java-8-oracle/
-export JAVA_HOME
-cd /cnvr
-mvn jetty:run &	

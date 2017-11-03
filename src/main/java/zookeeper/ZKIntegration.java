@@ -25,7 +25,7 @@ public class ZKIntegration implements Watcher {
     private final String PATH_ELECTION_ROOT = "/election";
     private final String PATH_OPERATION = "/operation";
     static Integer mutex;
-    private String myId = "";
+    private static String myId = "";
     public static final Operation initialOperation = new Operation(Operations.ESTADO, null);
 	public static int listSize = 0;
     public static int getCounter() {
@@ -50,7 +50,7 @@ public class ZKIntegration implements Watcher {
 	
 	
 	public void setMyId(String myId) {
-		this.myId = myId;
+		ZKIntegration.myId = myId;
 	}
 	/**
 	 * Constructor de la clase
@@ -88,9 +88,9 @@ public class ZKIntegration implements Watcher {
  			p("Created election path:"+ root );
  		}
  		
- 		this.myId = zk.create(PATH_ELECTION_ROOT+"/m_", ini, Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
- 		zk.exists(this.myId, this);
- 		p("Created member id: " +myId);
+ 		myId = zk.create(PATH_ELECTION_ROOT+"/m_", ini, Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+ 		zk.exists(myId, this);
+ 		p("Created member id: " + myId);
 
  		//En este nodo se escribirán las operaciones que todos leerán
  		Stat statmsg = zk.exists(PATH_OPERATION,this);
@@ -132,9 +132,8 @@ public class ZKIntegration implements Watcher {
             			break;   
             		case NodeDataChanged:
             			p("NodeDataChanged" + event.getPath());
-						byte[] dataLeader =	zk.getData(event.getPath(),true, null);
+						byte[] dataLeader =	zk.getData(event.getPath(), true, null);
 						MsgHandler.receive(dataLeader, myId);
-
             			break;   
             		case NodeDeleted:
             			p("NodeDeleted" + event.getPath());
@@ -148,6 +147,7 @@ public class ZKIntegration implements Watcher {
 				}
           }
 		} catch (KeeperException | ClassNotFoundException | InterruptedException | IOException e1) {
+			p(e1);
 			e1.printStackTrace();
 		}
     }
@@ -207,24 +207,22 @@ public class ZKIntegration implements Watcher {
 		p("Members:" + list.size());
 		for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
 			String string = (String) iterator.next();
-			System.out.print(string + ", ");				
+			p(string + ", ");				
 		}
 		p("");
-
 	}
     
-    
     /**
-     * Suma un n�mero al contador. Escribe la operaci�n en el nodo /operations para que todos lo reciban, incluido �l mismo.
-     * @param i N� a sumar
+     * Suma un número al contador. Escribe la operación en el nodo /operations para que todos lo reciban.
+     * @param i Nº a sumar
      * @throws KeeperException
      * @throws InterruptedException
      * @throws IOException
      * @throws ClassNotFoundException
      */
     public void sendOperation(Operation operation) throws KeeperException, InterruptedException, IOException, ClassNotFoundException {
-    	operation.setIp(myId);
-    	byte[] op = operation.serialize(operation);
+    	operation.setIp(getMyId());
+    	byte[] op = Operation.serialize(operation);
     	String path = PATH_OPERATION;
     	Stat stat = zk.exists(path, this);
         while (true) {
@@ -239,7 +237,7 @@ public class ZKIntegration implements Watcher {
     
 
     /**
-     * Atajo para hacer logs m�s facilmente
+     * Atajo para hacer logs más facilmente
      * @param s
      */
     public static void p(Object s){

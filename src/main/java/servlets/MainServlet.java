@@ -1,8 +1,8 @@
 package servlets;
 
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,15 +27,19 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String ip = request.getRemoteAddr();
-		if (ip.equalsIgnoreCase("0:0:0:0:0:0:0:1")) {
-		    InetAddress inetAddress = InetAddress.getLocalHost();
-		    String ipAddress = inetAddress.getHostAddress();
-		    ip = ipAddress;
-		}
-		System.out.println(ip);
-		request.setAttribute("ip", ip);
+
+		String hostname ="";
+		InetAddress ip = null;
+        try {
+            ip = InetAddress.getLocalHost();
+            hostname = ip.getHostName();
+            System.out.println("Your current IP address : " + ip);
+            System.out.println("Your current Hostname : " + hostname);
+ 
+        } catch (UnknownHostException e) {
+        	System.out.println("Unknown host");
+        }
+		request.setAttribute("ip", hostname );
 	    request.getRequestDispatcher("/index.jsp").forward(request, response);      		
 	}
 

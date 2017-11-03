@@ -4,8 +4,6 @@ package clients;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -14,17 +12,26 @@ public class BankClient implements  Serializable, BankClientI {
 	// Persistent Fields:
     private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue
+	@Id
  	private Long id;
 	private String name;
 	private float balance;
 	
-	public BankClient(String name, float initialBalance) {
+	public BankClient(Long id, String name, float initialBalance) {
+		this.id = id;
 		this.name = name;
 		this.balance = initialBalance;
 
 	}
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@Override 
 	public Long getAccount() {
 		// TODO Auto-generated method stub

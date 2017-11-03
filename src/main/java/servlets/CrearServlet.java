@@ -1,10 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import bank.Bank;
 import beans.BankClientBean;
 import clients.BankClient;
-import model.*;
 
 /**
  * Servlet implementation class CrearServlet
@@ -27,7 +23,6 @@ public class CrearServlet extends HttpServlet {
      */
     public CrearServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 
@@ -36,41 +31,31 @@ public class CrearServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		
-		
-//		try {
-		        
-		  String username = request.getParameter("username");
-		  float amount =  0;
-		  String initialAmount = request.getParameter("amount");
-		  try {
-			  amount = Long.parseLong(initialAmount);
-			  if (amount < 0 ){ amount = 0; }
-		  } catch (Exception e) {
-			  amount = 0;
-		  }
-		  	
+	  request.setCharacterEncoding("UTF-8");        
+	  String username = request.getParameter("username");
+	  float amount =  0;
+	  String initialAmount = request.getParameter("amount");
+	  try {
+		  amount = Long.parseLong(initialAmount);
+		  if (amount < 0 ){ amount = 0; }
+	  } catch (Exception e) {
+		  amount = 0;
+	  }
 
-		  if (username == null) {
-			  username = "Anónimo";
-		  }
-		 
-		  BankClient bc = Bank.getBank().crearCliente(username, amount);
-		  String message = "Su operación se ha realizado con éxito";
-		  request.setAttribute("name", bc.getName());
-		  BankClientBean cb = new BankClientBean(bc);
-		  HttpSession session = request.getSession();
-		  session.setAttribute("clientBean", cb);
-		  request.setAttribute("msg", message);
-		  request.setAttribute("icon", "ok");
-	      request.getRequestDispatcher("/results.jsp").forward(request, response);       
-	      
-//	      } catch (Exception e) {
-//	  		response.getWriter().append("Ha habido un error con su petici�n").append(e.toString());
-//
-//	      } 
+	  if (username == null) {
+		  username = "Anónimo";
+	  }
+	  Long id =  (long) (Math.random() * 100000000000000L);
+	  BankClient bc = Bank.getBank().crearCliente(id, username, amount);
+	  String message = "Su operación se ha realizado con éxito";
+	  request.setAttribute("name", bc.getName());
+	  BankClientBean cb = new BankClientBean(bc);
+	  HttpSession session = request.getSession();
+	  session.setAttribute("clientBean", cb);
+	  request.setAttribute("msg", message);
+	  request.setAttribute("icon", "ok");
+      request.getRequestDispatcher("/results.jsp").forward(request, response);       
+
 	}
 
 }

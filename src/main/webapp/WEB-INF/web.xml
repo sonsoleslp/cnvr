@@ -33,6 +33,12 @@
     </servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>borrartodo</servlet-name>
+    <servlet-class>
+      servlets.BorrarTodoServlet
+    </servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>transferir</servlet-name>
     <servlet-class>
       servlets.TransferServlet
@@ -90,6 +96,10 @@
     <url-pattern>/transferencia</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>borrartodo</servlet-name>
+    <url-pattern>/deleteall</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
   	<servlet-name>default</servlet-name>
   	<url-pattern>/</url-pattern>
   </servlet-mapping>

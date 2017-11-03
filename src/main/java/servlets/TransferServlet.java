@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import bank.Bank;
 import beans.BankClientBean;
 import clients.BankClient;
-import model.BankDBImpl;
 
 /**
  * Servlet implementation class TransferServlet
@@ -26,19 +25,15 @@ public class TransferServlet extends HttpServlet {
      */
     public TransferServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
 
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		int ok = 1;
 		Long origin = (long) 0;
-		
 		try {
 			origin = Long.parseLong(request.getParameter("origin"));
 		} catch(Exception e) {
@@ -46,7 +41,7 @@ public class TransferServlet extends HttpServlet {
 		}
 		Long target = (long) 0;
 		try {
-			origin = Long.parseLong(request.getParameter("target"));
+			target = Long.parseLong(request.getParameter("target"));
 		} catch(Exception e) {
 			ok = 0;
 		}
@@ -85,7 +80,6 @@ public class TransferServlet extends HttpServlet {
 		}
 		
 		request.setAttribute("msg", message);
-		
 	    request.getRequestDispatcher("/transfer.jsp").forward(request, response);      		
 	}
 

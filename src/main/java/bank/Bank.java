@@ -1,6 +1,5 @@
 package bank;
 
-import java.io.IOException;
 import java.util.List;
 
 import clients.BankClient;
@@ -21,17 +20,15 @@ public class Bank implements BankI {
 	}
 	
 	@Override
-	public BankClient crearCliente(String name, float amount) {
-		// TODO Auto-generated method stub
-		Operation op = new Operation(Operations.CREAR, 0L , name, amount, 0L);
+	public BankClient crearCliente(Long id, String name, float amount) {
+		Operation op = new Operation(Operations.CREAR, id , name, amount, 0L);
 		MsgHandler.send(op);
 		BankDBImpl dao = BankDBImpl.getInstance();
-	    return dao.crearCliente(name, amount);
+	    return dao.crearCliente(id, name, amount);
 	}
 
 	@Override
 	public BankClient ingresar(Long account, float amount) {
-		// TODO Auto-generated method stub
 		BankDBImpl dao = BankDBImpl.getInstance();
 		if (dao.consultarSaldo(account) != null) {
 			Operation op = new Operation(Operations.INGRESAR, account , "", amount, 0L);
@@ -44,7 +41,6 @@ public class Bank implements BankI {
 
 	@Override
 	public BankClient retirar(Long account, float amount) {
-		// TODO Auto-generated method stub
 		BankDBImpl dao = BankDBImpl.getInstance();
 		if (dao.consultarSaldo(account) != null) {
 			Operation op = new Operation(Operations.RETIRAR, account , "", amount, 0L);
@@ -56,7 +52,6 @@ public class Bank implements BankI {
 
 	@Override
 	public BankClient borrar(Long account) {
-		// TODO Auto-generated method stub
 		BankDBImpl dao = BankDBImpl.getInstance();
 		if (dao.consultarSaldo(account) != null) {
 			Operation op = new Operation(Operations.BORRAR, account , "", 0, 0L);
@@ -69,15 +64,12 @@ public class Bank implements BankI {
 
 	@Override
 	public BankClient consultarSaldo(Long account) {
-		// TODO Auto-generated method stub
-		// No se necesita operación
 		BankDBImpl dao = BankDBImpl.getInstance();
 	    return dao.consultarSaldo(account);
 	}
 
 	@Override
 	public List<BankClient> transferir(Long origin, Long target, float amount) {
-		// TODO Auto-generated method stub
 		
 		BankDBImpl dao = BankDBImpl.getInstance();
 		if (dao.consultarSaldo(origin) != null && dao.consultarSaldo(target) != null) {
@@ -102,7 +94,7 @@ public class Bank implements BankI {
 				dao.populate(op.getList());
 				break;
 			case CREAR:
-				dao.crearCliente(op.getName(), op.getBalance());
+				dao.crearCliente(op.getId(), op.getName(), op.getBalance());
 				break;	
 			case BORRAR:
 				dao.borrar(op.getId());
@@ -123,14 +115,12 @@ public class Bank implements BankI {
 	
 	@Override
 	public void deleteAll() {
-		
-		// TODO Auto-generated method stub
-
+		BankDBImpl dao = BankDBImpl.getInstance();
+		dao.deleteAll();
 	}
 
 	@Override
 	public List<BankClient> lista() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

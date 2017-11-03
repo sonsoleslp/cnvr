@@ -134,9 +134,11 @@ public class Operation implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Operation [operation=" + operation + ", id=" + id + ", name=" + name + ", balance=" + balance
-				+ ", other=" + other + "]";
+		return "Operation [operation=" + operation + ", id=" + id + ", name=" + name + ", ip=" + ip + ", balance="
+				+ balance + ", other=" + other + ", list=" + list + "]";
 	}
+
+	
 
 	
 	

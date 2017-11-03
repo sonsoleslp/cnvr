@@ -1,7 +1,5 @@
 package servlets;
  
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +9,6 @@ import javax.servlet.http.HttpSession;
 import beans.BankClientBean;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.DecimalFormat;
 import java.util.List;
 
 import clients.BankClient;
@@ -21,6 +17,8 @@ import bank.BankI;
 import model.BankDBImpl;
 
 public class ConsultarSaldoServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
   @Override
   public void doPost(HttpServletRequest request, 
