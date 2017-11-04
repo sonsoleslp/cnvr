@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import beans.BankClientBean;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import clients.BankClient;
@@ -49,7 +51,13 @@ public class ConsultarSaldoServlet extends HttpServlet {
 		  request.setAttribute("icon", "remove");
 	  }
 	  
-	  
+		 String hostname ="";
+		 InetAddress ip = null;
+	     try {
+	        ip = InetAddress.getLocalHost();
+	        hostname = ip.getHostName();
+	     } catch (UnknownHostException e) {}
+	     request.setAttribute("ip", hostname );
 	  
 	  request.setAttribute("msg", message);
       request.getRequestDispatcher("/results.jsp").forward(request, response);       
@@ -62,12 +70,20 @@ public class ConsultarSaldoServlet extends HttpServlet {
       throws ServletException, IOException {
 	  BankI dao = BankDBImpl.getInstance();
 	  List<BankClient> lista = dao.lista();
+	  String hostname ="";
+	  InetAddress ip = null;
+      try {
+    	  ip = InetAddress.getLocalHost();
+    	  hostname = ip.getHostName();
+      } catch (UnknownHostException e) {}
 	  String res = "";
+      res += "At: " + hostname + "\n";
 	  for(BankClient bc : lista) {
           res += bc.toString();
           res += "\n****************************************\n";
       }
-		response.getWriter().append(res);
+	  
+	  response.getWriter().append(res);
 
 	  
   }

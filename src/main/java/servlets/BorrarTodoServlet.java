@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +30,13 @@ public class BorrarTodoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Bank.getBank().deleteAll();
 		request.setCharacterEncoding("UTF-8");
+		 String hostname ="";
+		 InetAddress ip = null;
+	     try {
+	        ip = InetAddress.getLocalHost();
+	        hostname = ip.getHostName();
+	     } catch (UnknownHostException e) {}
+	     request.setAttribute("ip", hostname );
 		request.getRequestDispatcher("/index.jsp").forward(request, response);      		
 	}
 

@@ -5,35 +5,48 @@ boxes = [
   {
     :name => "cnvr1",
     :scriptProvision => "scripts/script.sh",
-    :scriptInit => "up.sh",
+    :scriptInit => "scripts/up.sh",
     :eth1 => "172.28.128.3",
-    :eth2 => "192.168.34.11",
+    :eth2 => "172.28.11.3",
   },
   {
     :name => "cnvr2",
     :scriptProvision => "scripts/script.sh",
-    :scriptInit => "up.sh",
+    :scriptInit => "scripts/up.sh",
     :eth1 => "172.28.128.4",
-    :eth2 => "192.168.34.12",
+    :eth2 => "172.28.11.4",
   },
   {
     :name => "cnvr3",
     :scriptProvision => "scripts/script.sh",
-    :scriptInit => "up.sh",
+    :scriptInit => "scripts/up.sh",
     :eth1 => "172.28.128.5",
-    :eth2 => "192.168.34.13",
+    :eth2 => "172.28.11.5",
   }
 ]
 
 Vagrant.configure(2) do |config|
-
+ 
 
   config.vm.box = "ubuntu/trusty64"
+  
+  # Zookeeper
+  config.vm.define :zk, primary: true do |zk_config|
+    zk_config.vm.box = "ubuntu/trusty64"
+    zk_config.vm.hostname = 'zk'
+    zk_config.vm.network :private_network, ip: "172.28.11.2",  netmask: "255.255.255.0"
+    zk_config.vm.synced_folder "./zk", "/cnvr/scripts"
+    zk_config.vm.provision :shell, :path => "scripts/zk-provision.sh"
+    zk_config.vm.provision :shell, :path => "scripts/zk-up.sh", run: 'always'
 
+  end
+
+  
   boxes.each do |opts|
     config.vm.define opts[:name] do |config|
       config.vm.hostname = opts[:name]
       config.vm.network "private_network", ip: opts[:eth1],  netmask: "255.255.255.0"
+      config.vm.network "private_network", ip: opts[:eth2],  netmask: "255.255.255.0"
       # config.vm.network "private_network",  type: "dhcp" # http://172.28.128.3:3000/
       config.vm.provision "shell", path: opts[:scriptProvision]
       config.vm.synced_folder ".", "/cnvr"
@@ -56,5 +69,6 @@ Vagrant.configure(2) do |config|
     haproxy_config.vm.provision :shell, :path => "scripts/haproxy-setup.sh", run: 'always'
 
   end
+  
 end
 

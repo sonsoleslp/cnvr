@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -78,7 +80,14 @@ public class TransferServlet extends HttpServlet {
 			request.setAttribute("amount", df.format(amount));
 			request.setAttribute("icon", "ok");
 		}
-		
+		 String hostname ="";
+		 InetAddress ip = null;
+	     try {
+	        ip = InetAddress.getLocalHost();
+	        hostname = ip.getHostName();
+	     } catch (UnknownHostException e) {}
+	     request.setAttribute("ip", hostname );
+	     
 		request.setAttribute("msg", message);
 	    request.getRequestDispatcher("/transfer.jsp").forward(request, response);      		
 	}

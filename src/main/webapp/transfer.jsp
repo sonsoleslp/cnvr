@@ -81,6 +81,9 @@ pageEncoding="UTF-8"%>
 
   
   </style>
+  <script>
+    console.log("<%= request.getAttribute("ip") %> ");
+  </script>
 </body>
 </html>
 

@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -56,6 +58,14 @@ public class BorrarServlet extends HttpServlet {
 			 request.setAttribute("msg", message);
 			 request.setAttribute("icon", "remove");
 		 }
+		 
+		 String hostname ="";
+		 InetAddress ip = null;
+	     try {
+	        ip = InetAddress.getLocalHost();
+	        hostname = ip.getHostName();
+	     } catch (UnknownHostException e) {}
+	     request.setAttribute("ip", hostname );
 		 request.getRequestDispatcher("/results.jsp").forward(request, response);      
 	}
 

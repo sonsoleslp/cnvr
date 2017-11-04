@@ -20,7 +20,7 @@ public class StartUpListener implements ServletContextListener {
         // Ej.: Conectar con zookeeper
 //        ZKIntegration zki = new ZKIntegration("localhost:80");
         ZKIntegration cl = new ZKIntegration("");
-        cl.init("192.168.1.52:2181");
+        cl.init("172.28.11.2:2181");
 
     }
  

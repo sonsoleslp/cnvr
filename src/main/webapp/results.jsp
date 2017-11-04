@@ -77,6 +77,9 @@ pageEncoding="UTF-8"%>
   	}
   </c:if>
   </style>
+  <script>
+    console.log("<%= request.getAttribute("ip") %> ");
+  </script>
 </body>
 </html>
 

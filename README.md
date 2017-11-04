@@ -1,18 +1,22 @@
 # CNVR
 
-(Se asume que Zookeeper está lanzado)
-
 ## Despliegue completo
 * Instalar Vagrant
 * Instalar VirtualBox
-* Situarse en el directorio del proyecto y hacer `vagrant up`
+* Clonar el proyecto `git clone https://github.com/sonsoleslp/cnvr.git`
+* Situarse en el directorio del proyecto `cd cnvr`
+* Ejecutar el comando `vagrant up`
 * Abrir el navegador en `http://localhost:8081/cnvr`
+* Para deshacer el escenario: `vagrant halt`
 
-## Pruebas con 1 server
+## Alternativa: Pruebas con 1 server en local
+* Instalar Zookeeper
+* Lanzar Zookeeper
 * Instalar Eclipse
 * Instalar plugin de Maven ( Help -> Install New Software. Buscar "Maven" en All Sites Available) y reiniciar Eclipse
 * Clonar el proyecto desde la perspectiva de git de Eclipse 
 * Cambiar a la perspectiva de Java EE.
+* Cambiar la IP de Zookeeper en StartupServlet
 * Botón derecho del ratón sobre el proyecto y Maven -> Update
 * Botón derecho del ratón sobre el proyecto y Run -> Maven build.... Configurar como Goal: jetty:run
 * Botón derecho del ratón sobre el proyecto y Run -> Maven build.
