@@ -283,6 +283,7 @@ pageEncoding="UTF-8"%>
 
         </div>
       </div>
+    	<a href="/balance">Client List</a>
     </div>
   </div>
 

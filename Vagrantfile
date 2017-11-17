@@ -8,6 +8,7 @@ boxes = [
     :scriptInit => "scripts/up.sh",
     :eth1 => "172.28.128.3",
     :eth2 => "172.28.11.3",
+    :port => 3001,
   },
   {
     :name => "cnvr2",
@@ -15,6 +16,7 @@ boxes = [
     :scriptInit => "scripts/up.sh",
     :eth1 => "172.28.128.4",
     :eth2 => "172.28.11.4",
+    :port => 3002,
   },
   {
     :name => "cnvr3",
@@ -22,6 +24,7 @@ boxes = [
     :scriptInit => "scripts/up.sh",
     :eth1 => "172.28.128.5",
     :eth2 => "172.28.11.5",
+    :port => 3003,
   }
 ]
 
@@ -45,12 +48,14 @@ Vagrant.configure(2) do |config|
   boxes.each do |opts|
     config.vm.define opts[:name] do |config|
       config.vm.hostname = opts[:name]
+      config.vm.network :forwarded_port, guest: 3000, host: opts[:port]
       config.vm.network "private_network", ip: opts[:eth1],  netmask: "255.255.255.0"
       config.vm.network "private_network", ip: opts[:eth2],  netmask: "255.255.255.0"
       # config.vm.network "private_network",  type: "dhcp" # http://172.28.128.3:3000/
       config.vm.provision "shell", path: opts[:scriptProvision]
       config.vm.synced_folder ".", "/cnvr"
       config.vm.provision "shell", path: opts[:scriptInit], run: 'always'
+      
     end
   end
 
