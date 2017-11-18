@@ -5,7 +5,7 @@ boxes = [
   {
     :name => "cnvr1",
     :scriptProvision => "scripts/script.sh",
-    :scriptInit => "scripts/up.sh",
+    :scriptInit => "scripts/up1.sh",
     :eth1 => "172.28.128.3",
     :eth2 => "172.28.11.3",
     :port => 3001,
@@ -13,7 +13,7 @@ boxes = [
   {
     :name => "cnvr2",
     :scriptProvision => "scripts/script.sh",
-    :scriptInit => "scripts/up.sh",
+    :scriptInit => "scripts/up2.sh",
     :eth1 => "172.28.128.4",
     :eth2 => "172.28.11.4",
     :port => 3002,
@@ -21,7 +21,7 @@ boxes = [
   {
     :name => "cnvr3",
     :scriptProvision => "scripts/script.sh",
-    :scriptInit => "scripts/up.sh",
+    :scriptInit => "scripts/up3.sh",
     :eth1 => "172.28.128.5",
     :eth2 => "172.28.11.5",
     :port => 3003,

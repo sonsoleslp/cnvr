@@ -1,5 +1,7 @@
 package servlets;
  
+
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -12,15 +14,18 @@ public class StartUpListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent e) {
     	
         System.out.println("App initialized");
-        System.out.println(e);
-        System.out.println(e.getServletContext().getServerInfo().toString());
-        System.out.println(e.getSource());
         
-        // Código al inicializar la aplicación
-        // Ej.: Conectar con zookeeper
-//        ZKIntegration zki = new ZKIntegration("localhost:80");
-        ZKIntegration cl = new ZKIntegration("");
-        cl.init("172.28.11.2:2181");
+        String zkPort = System.getProperty("zk");
+        if (zkPort == null) {
+        	zkPort = "2181";
+            System.out.println("ZK port not provided. Using 2181 by default");
+        } else {
+            System.out.println("Specified ZK port: " + zkPort);
+
+        }
+
+        ZKIntegration cluster = new ZKIntegration("");
+        cluster.init("172.28.11.2:" + zkPort);
 
     }
  
