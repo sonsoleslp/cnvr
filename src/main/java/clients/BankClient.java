@@ -75,6 +75,16 @@ public class BankClient implements  Serializable, BankClientI {
 				". \n Saldo: " + this.balance + 
 				". \n Nº de cuenta: " + this.id + ".";
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		if (obj instanceof BankClient) {
+		BankClient comp = (BankClient) obj;
+		return this.getId().equals(comp.getId()) && this.getBalance() == (comp.getBalance()) && this.getName().equals(comp.getName());
+		} 
+		return false;
+	}
 	
 
 }
