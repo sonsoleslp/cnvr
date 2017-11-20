@@ -27,7 +27,7 @@ public class MsgHandler {
 	public static void receive(byte[] msg, String myId) throws ClassNotFoundException, IOException {
 		
 		Operation op = (Operation) Operation.deserialize(msg);
-		String id = op.getIp();
+		String id = op.getSrc();
 		
 		System.out.println("Received operation: " + op.toString());
 		System.out.println("From " + myId + " to " + id);

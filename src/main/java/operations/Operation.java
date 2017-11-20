@@ -26,7 +26,7 @@ public class Operation implements Serializable {
 	/**
 	 * Nombre del znode que origina la operación
 	 */
-	private String ip = "";
+	private String src = "";
 	/**
 	 * Saldo en la cuenta o cantidad de dinero a ingresar/retirar/transferir
 	 */
@@ -172,16 +172,16 @@ public class Operation implements Serializable {
 	 * Getter del znode de origen de la operación
 	 * @return Id del znode
 	 */
-	public String getIp() {
-		return ip;
+	public String getSrc() {
+		return src;
 	}
 
 	/**
 	 * Setter del znode de origen de la operación
-	 * @param ip Id del znode
+	 * @param src Id del znode
 	 */
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setSrc(String src) {
+		this.src = src;
 	}
 
 	/**
@@ -215,7 +215,7 @@ public class Operation implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Operation [operation=" + operation + ", id=" + id + ", name=" + name + ", ip=" + ip + ", balance="
+		return "Operation [operation=" + operation + ", id=" + id + ", name=" + name + ", ip=" + src + ", balance="
 				+ balance + ", other=" + other + ", list=" + list + "]";
 	}
 

@@ -94,7 +94,7 @@ public class ZKIntegration implements Watcher {
 	/**
 	 * Constructor de la clase
 	 */
-	public ZKIntegration() {
+	private ZKIntegration() {
 		
     }
     
@@ -284,7 +284,7 @@ public class ZKIntegration implements Watcher {
      * @throws ClassNotFoundException
      */
     public static void sendOperation(Operation operation) throws KeeperException, InterruptedException, IOException, ClassNotFoundException {
-    	operation.setIp(getMyId());
+    	operation.setSrc(getMyId());
     	byte[] op = Operation.serialize(operation);
     	String path = PATH_OPERATION;
     	Stat stat = zk.exists(path, zki);
