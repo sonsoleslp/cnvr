@@ -39,6 +39,7 @@ public class BankImplTest {
 //		BankI dao = BankDBImpl.getInstance();
 //		dao.deleteAll();
 	}
+	
 	@Test
 	public void testCrearCliente() {
 		BankI dao = BankDBImpl.getInstance();

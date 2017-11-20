@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.BankClientBean;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -15,14 +14,18 @@ import java.util.List;
 
 import clients.BankClient;
 import bank.Bank;
-import bank.BankI;
-import model.BankDBImpl;
 
+/**
+ * Servlet implementation class ConsultarSaldoServlet
+ */
 public class ConsultarSaldoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
   @Override
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
   public void doPost(HttpServletRequest request, 
       HttpServletResponse response)
       throws ServletException, IOException {
@@ -40,8 +43,7 @@ public class ConsultarSaldoServlet extends HttpServlet {
 	  request.setCharacterEncoding("UTF-8");
 	  HttpSession session = request.getSession();
 	  if (bc != null  && ok == 1) {
-		  BankClientBean cb = new BankClientBean(bc);
-		  session.setAttribute("clientBean", cb);
+		  session.setAttribute("clientBean", bc);
 		  request.setAttribute("msg", message);
 		  request.setAttribute("icon", "ok");
 	  } else {
@@ -68,8 +70,7 @@ public class ConsultarSaldoServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, 
       HttpServletResponse response)
       throws ServletException, IOException {
-	  BankI dao = BankDBImpl.getInstance();
-	  List<BankClient> lista = dao.lista();
+	  List<BankClient> lista = Bank.getBank().lista();
 	  String hostname ="";
 	  InetAddress ip = null;
       try {

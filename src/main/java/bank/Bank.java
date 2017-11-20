@@ -6,19 +6,36 @@ import clients.BankClient;
 import model.BankDBImpl;
 import operations.*;
 import zookeeper.MsgHandler;
- 
+
+/**
+ * Recibe operaciones del manejador de mensajes de ZK o de los servlets y las ejecuta en la DB local
+ *
+ */
 public class Bank implements BankI {
+	
+	/**
+	 * Singleton instance
+	 */
 	private static Bank bank;
 	
+	/**
+	 * Constructor
+	 */
 	public Bank () {}
 	
+	/**
+	 * Getter de la instancia Singleton 
+	 * @return Bank instance
+	 */
 	public static Bank getBank() {
 		if (bank == null) {
 			bank = new Bank();
 		} 
 		return bank;
 	}
-	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BankClient crearCliente(Long id, String name, float amount) {
 		Operation op = new Operation(Operations.CREAR, id , name, amount, 0L);
@@ -27,6 +44,9 @@ public class Bank implements BankI {
 	    return dao.crearCliente(id, name, amount);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BankClient ingresar(Long account, float amount) {
 		BankDBImpl dao = BankDBImpl.getInstance();
@@ -38,7 +58,9 @@ public class Bank implements BankI {
 		return null;
 
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BankClient retirar(Long account, float amount) {
 		BankDBImpl dao = BankDBImpl.getInstance();
@@ -50,6 +72,9 @@ public class Bank implements BankI {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BankClient borrar(Long account) {
 		BankDBImpl dao = BankDBImpl.getInstance();
@@ -62,12 +87,18 @@ public class Bank implements BankI {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BankClient consultarSaldo(Long account) {
 		BankDBImpl dao = BankDBImpl.getInstance();
 	    return dao.consultarSaldo(account);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<BankClient> transferir(Long origin, Long target, float amount) {
 		
@@ -80,6 +111,9 @@ public class Bank implements BankI {
 		return null;
 	}
 
+	/**
+	 * Envía la lista de clientes actual a una nueva sucursal bancaria 
+	 */
 	public void newSucursal() {
 		BankDBImpl dao = BankDBImpl.getInstance();
 	    List<BankClient> list =  dao.lista();
@@ -87,6 +121,10 @@ public class Bank implements BankI {
 		MsgHandler.send(op);
 	}
 	
+	/**
+	 * Recibe una operación de Zookeeper y la convierte en una operación sobre la DB local
+	 * @param op Operación a realizar
+	 */
 	public void externalOperation(Operation op) {
 		BankDBImpl dao = BankDBImpl.getInstance();
 		switch(op.getOperation()) {
@@ -113,15 +151,23 @@ public class Bank implements BankI {
 		}
 	}
 	
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteAll() {
 		BankDBImpl dao = BankDBImpl.getInstance();
 		dao.deleteAll();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<BankClient> lista() {
-		return null;
+		BankDBImpl dao = BankDBImpl.getInstance();
+		return dao.lista();
 	}
 
 }

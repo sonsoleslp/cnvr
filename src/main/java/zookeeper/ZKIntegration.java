@@ -15,51 +15,104 @@ import org.apache.zookeeper.data.Stat;
 import model.BankDBImpl;
 import operations.*;
 /**
- * ZKLeader + Counter
+ * Clase de integración entre la aplicación y el cluster de Zookeeper
  *
  */
 public class ZKIntegration implements Watcher {
-	private static final Boolean DEBUG = true;
-	private static int counter;
+	
+	/**
+	 * Constante que indica si se está en modo DEBUG, haciendo que se impriman por consola los logs de las operaciones
+	 */
+	private static final Boolean DEBUG = false;
+	/**
+	 * Instancia de la clase Singleton ZKIntegration
+	 */
+	private static ZKIntegration zki;
+	
+	/**
+	 * Instancia de Zookeeper
+	 */
     static ZooKeeper zk = null;
-    private final String PATH_ELECTION_ROOT = "/election";
-    private final String PATH_OPERATION = "/operation";
+    /**
+     * Path del znode de elección de leader
+     */
+    private final static String PATH_ELECTION_ROOT = "/election";
+    /**
+     * Path del znode de operaciones
+     */
+    private final static String PATH_OPERATION = "/operation";
+    /**
+     * Mutex
+     */
     static Integer mutex;
+    /**
+     * Id del znode
+     */
     private static String myId = "";
+    /**
+     * Operación vacía inicial con la que se inicializa el znode de Operaciones
+     */
     public static final Operation initialOperation = new Operation(Operations.ESTADO, null);
+    
+    /**
+     * Tamaño inicial de la lista de miembros de la vista
+     */
 	public static int listSize = 0;
-    public static int getCounter() {
-		return counter;
-	}
 
-	public static void setCounter(int count) {
- 		counter = count;
-	}
 
+	/**
+	 * Getter de la instancia de Zookeeper
+	 * @return Instancia de Zookeeper
+	 */
 	public static ZooKeeper getZk() {
 		return zk;
 	}
 
+	/**
+	 * Setter de la instancia de Zookeeper
+	 * @param zk Instancia de Zookeeper
+	 */
 	public static void setZk(ZooKeeper zk) {
 		ZKIntegration.zk = zk;
 	}
 
-	public String getMyId() {
+	/**
+	 * Getter del id de miembro del servidor
+	 * @return Identificador
+	 */
+	public static String getMyId() {
 		return myId;
 	}
 	
-	
+	/**
+	 * Setter del id de miembro del servidor
+	 * @param myId Identificador
+	 */
 	public void setMyId(String myId) {
 		ZKIntegration.myId = myId;
 	}
 	/**
 	 * Constructor de la clase
-	 * @param address IP address de Zookeeper
 	 */
-	public ZKIntegration(String address) {
-        
+	public ZKIntegration() {
+		
     }
     
+	/**
+	 * Devuelve la instancia única de la clase
+	 * @return Instancia de ZKIntegration
+	 */
+	public static ZKIntegration getInstance() {
+		if (zki == null) {
+			zki = new ZKIntegration();
+		} 
+		return zki;
+	}
+	
+	/**
+	 * Inicializa la conexión con Zookeeper y crea los znodes necesarios
+	 * @param address IP de Zookeeper
+	 */
 	public void init (String address) {
 		if(zk == null){
             try {
@@ -105,7 +158,7 @@ public class ZKIntegration implements Watcher {
 	/**
 	 * Process del Watcher. Maneja todos los eventos de los znodes.
 	 */
-    synchronized public void process(WatchedEvent event) {
+	 synchronized public void process(WatchedEvent event) {
 		try {
 			zk.exists(event.getPath(), true);
 	        synchronized (mutex) {
@@ -116,14 +169,13 @@ public class ZKIntegration implements Watcher {
 						p("NodeChildrenChanged " + event.getPath());
  						boolean bool = newProcesses(); // Indica que se ha a�adido un nodo nuevo
  						// Si se ha a�adido un nodo nuevo y soy el leader, le mando el valor al nodo nuevo
-						if (bool && myId.equals("/election/" + idLeader())) { 
+						if (bool && myId.equals(PATH_ELECTION_ROOT + "/"  + idLeader())) { 
 							Operation op = new Operation(Operations.ESTADO, BankDBImpl.getInstance().lista());
   							String last = idlast();
  							Thread.sleep(5000);
-							p("Sending the initial counter to new process:" + last +". Value= " + getCounter());
- 							zk.setData("/election/"+last,Operation.serialize(op),-1);
+ 							zk.setData(PATH_ELECTION_ROOT + "/" + last,Operation.serialize(op),-1);
  						}
-						if (event.getPath().toLowerCase().contains("/election")) {
+						if (event.getPath().toLowerCase().contains(PATH_ELECTION_ROOT)) {
             				newLeaderElection();
 						}
             			break;
@@ -138,7 +190,7 @@ public class ZKIntegration implements Watcher {
             		case NodeDeleted:
             			p("NodeDeleted" + event.getPath());
             			String path = event.getPath().toLowerCase();
-            			if(path.contains("/election")) {
+            			if(path.contains(PATH_ELECTION_ROOT)) {
             				newLeaderElection();
             			}
             			break;
@@ -152,6 +204,12 @@ public class ZKIntegration implements Watcher {
 		}
     }
 
+	 /**
+	  * Elección de leader
+	  * @throws KeeperException
+	  * @throws InterruptedException
+	  * @throws IOException
+	  */
     public void newLeaderElection() throws KeeperException, InterruptedException, IOException{
 		String leader = idLeader();
 		leader = PATH_ELECTION_ROOT + "/" + leader;
@@ -160,7 +218,12 @@ public class ZKIntegration implements Watcher {
 
     }
 
-    
+   /**
+    * Calcula el id del leader
+    * @return
+    * @throws KeeperException
+    * @throws InterruptedException
+    */
     public String idLeader() throws KeeperException, InterruptedException {
 		List<String> list = zk.getChildren(PATH_ELECTION_ROOT, this);
 		listSize = list.size();
@@ -172,7 +235,7 @@ public class ZKIntegration implements Watcher {
     }
     
     /**
-     * Comprueba si hay m�s procesos en la nueva lista de miembros que en la anterior
+     * Comprueba si hay m�s procesos en la nueva lista de miembros que en la anterior. 
      * Es decir, comprueba si hay nuevos procesos
      * @return true si hay nuevos procesos, false si hay igual o menos
      * @throws KeeperException
@@ -184,8 +247,8 @@ public class ZKIntegration implements Watcher {
 	}
     
     /**
-     * Comprueba cual es el �ltimo proceso de la lista, el �ltimo que se ha creado
-     * @return Identificador del �ltimo proceso
+     * Comprueba cual es el �ltimo proceso de la lista, el último que se ha creado
+     * @return Identificador del último proceso
      * @throws KeeperException
      * @throws InterruptedException
      */
@@ -213,18 +276,18 @@ public class ZKIntegration implements Watcher {
 	}
     
     /**
-     * Suma un número al contador. Escribe la operación en el nodo /operations para que todos lo reciban.
+     * Escribe la operación en el nodo /operations para que todos lo reciban.
      * @param i Nº a sumar
      * @throws KeeperException
      * @throws InterruptedException
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public void sendOperation(Operation operation) throws KeeperException, InterruptedException, IOException, ClassNotFoundException {
+    public static void sendOperation(Operation operation) throws KeeperException, InterruptedException, IOException, ClassNotFoundException {
     	operation.setIp(getMyId());
     	byte[] op = Operation.serialize(operation);
     	String path = PATH_OPERATION;
-    	Stat stat = zk.exists(path, this);
+    	Stat stat = zk.exists(path, zki);
         while (true) {
         synchronized (mutex) {
     		if (stat!=null) {

@@ -6,10 +6,13 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import zookeeper.ZKIntegration;
-
+/**
+ * Context Listener que se lanza al inicializar la aplicación. Inicializa la conexión con ZK. 
+ *
+ */
 public class StartUpListener implements ServletContextListener {
 
-    // Prepare the EntityManagerFactory & Enhance:
+
     @Override
     public void contextInitialized(ServletContextEvent e) {
     	
@@ -21,15 +24,12 @@ public class StartUpListener implements ServletContextListener {
             System.out.println("ZK port not provided. Using 2181 by default");
         } else {
             System.out.println("Specified ZK port: " + zkPort);
-
         }
 
-        ZKIntegration cluster = new ZKIntegration("");
-        cluster.init("172.28.11.2:" + zkPort);
+        ZKIntegration.getInstance().init("172.28.11.2:" + zkPort);
 
     }
  
-    // Release the EntityManagerFactory:
     @Override
     public void contextDestroyed(ServletContextEvent e) {
         System.out.println("The End");

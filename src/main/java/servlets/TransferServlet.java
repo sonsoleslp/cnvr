@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bank.Bank;
-import beans.BankClientBean;
 import clients.BankClient;
 
 /**
@@ -71,10 +70,8 @@ public class TransferServlet extends HttpServlet {
 		} else {
 			BankClient bc_origin = lista.get(0);
 			BankClient bc_target= lista.get(1);
-			BankClientBean cb1 = new BankClientBean(bc_origin);
-			BankClientBean cb2 = new BankClientBean(bc_target);
-			session.setAttribute("clientBean1", cb1);
-			session.setAttribute("clientBean2", cb2);
+			session.setAttribute("clientBean1", bc_origin);
+			session.setAttribute("clientBean2", bc_target);
 			  
 			DecimalFormat df = new DecimalFormat("#0.00"); 
 			request.setAttribute("amount", df.format(amount));

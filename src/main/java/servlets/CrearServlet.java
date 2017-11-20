@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bank.Bank;
-import beans.BankClientBean;
 import clients.BankClient;
 
 /**
@@ -51,7 +50,7 @@ public class CrearServlet extends HttpServlet {
 	  BankClient bc = Bank.getBank().crearCliente(id, username, amount);
 	  String message = "Su operación se ha realizado con éxito";
 	  request.setAttribute("name", bc.getName());
-	  BankClientBean cb = new BankClientBean(bc);
+	  BankClient cb = bc;
 	  HttpSession session = request.getSession();
 	  session.setAttribute("clientBean", cb);
 	  request.setAttribute("msg", message);

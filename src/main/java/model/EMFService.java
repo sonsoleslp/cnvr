@@ -6,11 +6,9 @@ import javax.persistence.Persistence;
 
 /**
  * Manejar transacciones con la DB
- * 
- *
  */
 public class EMFService {
-	
+
 	private static final EntityManagerFactory emfInstance = Persistence
 			.createEntityManagerFactory("$objectdb/db/clients.odb");
 	private EMFService() {

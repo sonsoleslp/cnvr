@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bank.Bank;
-import beans.BankClientBean;
 import clients.BankClient;
 
 /**
@@ -47,8 +46,7 @@ public class BorrarServlet extends HttpServlet {
 		 request.setCharacterEncoding("UTF-8");
 		 HttpSession session = request.getSession();
 		 if (bc != null && ok == 1) {
-			 BankClientBean cb = new BankClientBean(bc);
-			 session.setAttribute("clientBean", cb);
+			 session.setAttribute("clientBean", bc);
 			 request.setAttribute("msg", message);
 			 request.setAttribute("linethrough", true);
 			 request.setAttribute("icon", "ok");

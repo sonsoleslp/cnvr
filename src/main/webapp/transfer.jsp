@@ -1,4 +1,4 @@
-<%@page import="beans.BankClientBean"%>
+<%@page import="clients.BankClient"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -35,7 +35,7 @@ pageEncoding="UTF-8"%>
          <div class="panel panel-danger">
             <div class="panel-heading">Resultado</div>
             <div class="panel-body">
-            <c:if test="${not empty clientBean1 or not empty clientBean2}">
+            <c:if test="${amount != null and not empty clientBean1 and not empty clientBean2}">
             
             <div class="panel panel-danger"><div class="panel-body">
 	            <h5><strong>Cantidad transferida:</strong> <%= request.getAttribute("amount") %> €</h5></div></div>
