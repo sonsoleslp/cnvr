@@ -235,7 +235,7 @@ public class ZKIntegration implements Watcher {
     }
     
     /**
-     * Comprueba si hay m�s procesos en la nueva lista de miembros que en la anterior. 
+     * Comprueba si hay más procesos en la nueva lista de miembros que en la anterior. 
      * Es decir, comprueba si hay nuevos procesos
      * @return true si hay nuevos procesos, false si hay igual o menos
      * @throws KeeperException
@@ -247,7 +247,7 @@ public class ZKIntegration implements Watcher {
 	}
     
     /**
-     * Comprueba cual es el �ltimo proceso de la lista, el último que se ha creado
+     * Comprueba cual es el último proceso de la lista, el último que se ha creado
      * @return Identificador del último proceso
      * @throws KeeperException
      * @throws InterruptedException
