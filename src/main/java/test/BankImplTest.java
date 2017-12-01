@@ -17,9 +17,9 @@ public class BankImplTest {
 	final static long ACCOUNT = 00000000000001L;
 	final static String NAME = "John Doe";
 	final static float BALANCE = 1000;
-	
+
 	final static float AMOUNT = 100;
-	
+
 	final static Long ACCOUNT2 = 00000000000002L;
 	final static String NAME2 = "Jane Doe";
 	final static float BALANCE2 = 3000;
@@ -36,10 +36,10 @@ public class BankImplTest {
 
 	@After
 	public void tearDown() throws Exception {
-//		BankI dao = BankDBImpl.getInstance();
-//		dao.deleteAll();
+		//		BankI dao = BankDBImpl.getInstance();
+		//		dao.deleteAll();
 	}
-	
+
 	@Test
 	public void testCrearCliente() {
 		BankI dao = BankDBImpl.getInstance();
@@ -55,7 +55,7 @@ public class BankImplTest {
 		BankClient bc = dao.consultarSaldo(ACCOUNT);
 		assertEquals(BALANCE, bc.getBalance(), 0);
 		assertNull(dao.consultarSaldo(FAKE_ACCOUNT));
-		
+
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class BankImplTest {
 
 	}
 
-	
+
 	@Test
 	public void testBorrar() {
 		BankI dao = BankDBImpl.getInstance();
@@ -108,8 +108,8 @@ public class BankImplTest {
 		assertNull(dao.consultarSaldo(ACCOUNT));
 		assertNull(dao.consultarSaldo(FAKE_ACCOUNT));
 	}
-	
-	
+
+
 	@Test
 	public void testPopulateAndList() {
 		BankDBImpl dao = BankDBImpl.getInstance();
@@ -121,7 +121,7 @@ public class BankImplTest {
 		all.add(bc2);
 		all.add(bc3);
 		dao.populate(all);
-		
+
 		List<BankClient> retrieved = dao.lista();
 		assertEquals(3, retrieved.size());
 		assertEquals(bc1, retrieved.get(0));
@@ -138,6 +138,6 @@ public class BankImplTest {
 	}
 
 
-	
+
 
 }

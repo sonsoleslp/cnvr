@@ -10,12 +10,12 @@ import javax.persistence.Id;
 @Entity
 public class BankClient implements  Serializable, BankClientI {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Nº de cuenta
 	 */
 	@Id
- 	private Long id;
+	private Long id;
 	/**
 	 * Nombre del cliente
 	 */
@@ -24,7 +24,7 @@ public class BankClient implements  Serializable, BankClientI {
 	 * Saldo de la cuenta
 	 */
 	private float balance;
-	
+
 	/**
 	 * Constructor
 	 * @param id Nº de cuenta
@@ -36,7 +36,7 @@ public class BankClient implements  Serializable, BankClientI {
 		this.name = name;
 		this.balance = initialBalance;
 	}
-	
+
 	/**
 	 * Getter del nº de cuenta
 	 * @return Nº de cuenta
@@ -44,7 +44,7 @@ public class BankClient implements  Serializable, BankClientI {
 	public Long getId() {
 		return id;
 	}
-	
+
 	/**
 	 * Setter del nº de cuenta
 	 * @param id Nº de cuenta
@@ -97,7 +97,7 @@ public class BankClient implements  Serializable, BankClientI {
 		// TODO Auto-generated method stub
 		return this.balance;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -106,7 +106,7 @@ public class BankClient implements  Serializable, BankClientI {
 		// TODO Auto-generated method stub
 		this.balance = balance;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -124,11 +124,11 @@ public class BankClient implements  Serializable, BankClientI {
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
 		if (obj instanceof BankClient) {
-		BankClient comp = (BankClient) obj;
-		return this.getId().equals(comp.getId()) && this.getBalance() == (comp.getBalance()) && this.getName().equals(comp.getName());
+			BankClient comp = (BankClient) obj;
+			return this.getId().equals(comp.getId()) && this.getBalance() == (comp.getBalance()) && this.getName().equals(comp.getName());
 		} 
 		return false;
 	}
-	
+
 
 }

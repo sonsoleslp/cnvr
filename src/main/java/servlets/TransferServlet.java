@@ -20,13 +20,13 @@ import clients.BankClient;
  */
 public class TransferServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public TransferServlet() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public TransferServlet() {
+		super();
+	}
 
 
 	/**
@@ -55,7 +55,7 @@ public class TransferServlet extends HttpServlet {
 		} catch(Exception e) {
 			ok = 0;
 		}
-		
+
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
@@ -72,21 +72,21 @@ public class TransferServlet extends HttpServlet {
 			BankClient bc_target= lista.get(1);
 			session.setAttribute("clientBean1", bc_origin);
 			session.setAttribute("clientBean2", bc_target);
-			  
+
 			DecimalFormat df = new DecimalFormat("#0.00"); 
 			request.setAttribute("amount", df.format(amount));
 			request.setAttribute("icon", "ok");
 		}
-		 String hostname ="";
-		 InetAddress ip = null;
-	     try {
-	        ip = InetAddress.getLocalHost();
-	        hostname = ip.getHostName();
-	     } catch (UnknownHostException e) {}
-	     request.setAttribute("ip", hostname );
-	     
+		String hostname ="";
+		InetAddress ip = null;
+		try {
+			ip = InetAddress.getLocalHost();
+			hostname = ip.getHostName();
+		} catch (UnknownHostException e) {}
+		request.setAttribute("ip", hostname );
+
 		request.setAttribute("msg", message);
-	    request.getRequestDispatcher("/transfer.jsp").forward(request, response);      		
+		request.getRequestDispatcher("/transfer.jsp").forward(request, response);      		
 	}
 
 }

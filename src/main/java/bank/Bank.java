@@ -12,17 +12,17 @@ import zookeeper.MsgHandler;
  *
  */
 public class Bank implements BankI {
-	
+
 	/**
 	 * Singleton instance
 	 */
 	private static Bank bank;
-	
+
 	/**
 	 * Constructor
 	 */
 	public Bank () {}
-	
+
 	/**
 	 * Getter de la instancia Singleton 
 	 * @return Bank instance
@@ -41,7 +41,7 @@ public class Bank implements BankI {
 		Operation op = new Operation(Operations.CREAR, id , name, amount, 0L);
 		MsgHandler.send(op);
 		BankDBImpl dao = BankDBImpl.getInstance();
-	    return dao.crearCliente(id, name, amount);
+		return dao.crearCliente(id, name, amount);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Bank implements BankI {
 	@Override
 	public BankClient consultarSaldo(Long account) {
 		BankDBImpl dao = BankDBImpl.getInstance();
-	    return dao.consultarSaldo(account);
+		return dao.consultarSaldo(account);
 	}
 
 	/**
@@ -101,13 +101,13 @@ public class Bank implements BankI {
 	 */
 	@Override
 	public List<BankClient> transferir(Long origin, Long target, float amount) {
-		
+
 		BankDBImpl dao = BankDBImpl.getInstance();
 		if (dao.consultarSaldo(origin) != null && dao.consultarSaldo(target) != null) {
 			Operation op = new Operation(Operations.TRANSFERIR, origin , "", amount, target);
 			MsgHandler.send(op);
 			return dao.transferir(origin, target, amount);
-	    }	
+		}	
 		return null;
 	}
 
@@ -116,11 +116,11 @@ public class Bank implements BankI {
 	 */
 	public void newSucursal() {
 		BankDBImpl dao = BankDBImpl.getInstance();
-	    List<BankClient> list =  dao.lista();
+		List<BankClient> list =  dao.lista();
 		Operation op = new Operation(Operations.ESTADO, list);
 		MsgHandler.send(op);
 	}
-	
+
 	/**
 	 * Recibe una operación de Zookeeper y la convierte en una operación sobre la DB local
 	 * @param op Operación a realizar
@@ -128,30 +128,30 @@ public class Bank implements BankI {
 	public void externalOperation(Operation op) {
 		BankDBImpl dao = BankDBImpl.getInstance();
 		switch(op.getOperation()) {
-			case ESTADO:
-				dao.populate(op.getList());
-				break;
-			case CREAR:
-				dao.crearCliente(op.getId(), op.getName(), op.getBalance());
-				break;	
-			case BORRAR:
-				dao.borrar(op.getId());
-				break;
-			case INGRESAR:
-				dao.ingresar(op.getId(), op.getBalance());
-				break;
-			case RETIRAR:
-				dao.retirar(op.getId(), op.getBalance());
-				break;
-			case TRANSFERIR:
-				dao.transferir(op.getId(), op.getOther(), op.getBalance());
-				break;
-			default:
-				break;
+		case ESTADO:
+			dao.populate(op.getList());
+			break;
+		case CREAR:
+			dao.crearCliente(op.getId(), op.getName(), op.getBalance());
+			break;	
+		case BORRAR:
+			dao.borrar(op.getId());
+			break;
+		case INGRESAR:
+			dao.ingresar(op.getId(), op.getBalance());
+			break;
+		case RETIRAR:
+			dao.retirar(op.getId(), op.getBalance());
+			break;
+		case TRANSFERIR:
+			dao.transferir(op.getId(), op.getOther(), op.getBalance());
+			break;
+		default:
+			break;
 		}
 	}
-	
-	
+
+
 	/**
 	 * {@inheritDoc}
 	 */

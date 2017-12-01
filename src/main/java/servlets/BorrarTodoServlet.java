@@ -16,13 +16,13 @@ import bank.Bank;
  */
 public class BorrarTodoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BorrarTodoServlet() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public BorrarTodoServlet() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -30,13 +30,13 @@ public class BorrarTodoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Bank.getBank().deleteAll();
 		request.setCharacterEncoding("UTF-8");
-		 String hostname ="";
-		 InetAddress ip = null;
-	     try {
-	        ip = InetAddress.getLocalHost();
-	        hostname = ip.getHostName();
-	     } catch (UnknownHostException e) {}
-	     request.setAttribute("ip", hostname );
+		String hostname ="";
+		InetAddress ip = null;
+		try {
+			ip = InetAddress.getLocalHost();
+			hostname = ip.getHostName();
+		} catch (UnknownHostException e) {}
+		request.setAttribute("ip", hostname );
 		request.getRequestDispatcher("/index.jsp").forward(request, response);      		
 	}
 

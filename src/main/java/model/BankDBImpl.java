@@ -13,7 +13,7 @@ import bank.BankI;
  *
  */
 public class BankDBImpl implements BankI {
-	
+
 	/**
 	 * Única instancia de la clase (Singleton)
 	 */
@@ -32,7 +32,7 @@ public class BankDBImpl implements BankI {
 			instance = new BankDBImpl();
 		return instance;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -46,7 +46,7 @@ public class BankDBImpl implements BankI {
 		em.close();
 		return bc;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -70,7 +70,7 @@ public class BankDBImpl implements BankI {
 			bc.setBalance(bc.getBalance()+amount);
 			em.merge(bc);
 			em.getTransaction().commit();
-	
+
 			em.close();
 			return bc;
 		}
@@ -89,7 +89,7 @@ public class BankDBImpl implements BankI {
 			bc.setBalance(bc.getBalance()-amount);
 			em.merge(bc);
 			em.getTransaction().commit();
-	
+
 			em.close();
 			return bc;
 		}
@@ -108,7 +108,7 @@ public class BankDBImpl implements BankI {
 			em.remove(bc);
 			em.getTransaction().commit();
 			em.close();
-			
+
 			return bc;
 		}
 		return null;
@@ -133,37 +133,37 @@ public class BankDBImpl implements BankI {
 			em.getTransaction().commit();
 			lista.add(bc1);
 			lista.add(bc2);
- 		}
+		}
 		em.close();
 		return lista;
 	}
-	
+
 	/**
 	 * Popula la DB a partir de una lista de clientes
 	 * @param all Lista de clientes
 	 */
 	public void populate(List<BankClient> all) {
 		try {
-		System.out.println("Populating DB");
-		System.out.println(all);
-		EntityManager em = EMFService.get().createEntityManager();
-		em.getTransaction().begin();
-		em.createQuery("DELETE FROM BankClient").executeUpdate();
-		
-		for (int i = 0; i < all.size(); i++) {
-			 BankClient bc = all.get(i);
-			 em.persist(bc);
- 		}
- 
-		
-		System.out.println("DONE");
-		em.getTransaction().commit();
-		em.close(); 
+			System.out.println("Populating DB");
+			System.out.println(all);
+			EntityManager em = EMFService.get().createEntityManager();
+			em.getTransaction().begin();
+			em.createQuery("DELETE FROM BankClient").executeUpdate();
+
+			for (int i = 0; i < all.size(); i++) {
+				BankClient bc = all.get(i);
+				em.persist(bc);
+			}
+
+
+			System.out.println("DONE");
+			em.getTransaction().commit();
+			em.close(); 
 		} catch(Exception e) {
 			System.out.println(e);
 		}
 	}
-	
+
 	/**
 	 * Borra todos los clientes de la DB
 	 */
@@ -174,10 +174,10 @@ public class BankDBImpl implements BankI {
 		em.createQuery("DELETE FROM BankClient").executeUpdate();
 		em.getTransaction().commit();
 		em.close(); 
-	
+
 
 	}
-	
+
 	/**
 	 * Devuelve la lista completa de clientes
 	 */

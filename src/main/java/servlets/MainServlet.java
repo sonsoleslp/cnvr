@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MainServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public MainServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,19 +30,19 @@ public class MainServlet extends HttpServlet {
 
 		String hostname ="";
 		InetAddress ip = null;
-        try {
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            System.out.println("Your current IP address : " + ip);
-            System.out.println("Your current Hostname : " + hostname);
- 
-        } catch (UnknownHostException e) {
-        	System.out.println("Unknown host");
-        }
+		try {
+			ip = InetAddress.getLocalHost();
+			hostname = ip.getHostName();
+			System.out.println("Your current IP address : " + ip);
+			System.out.println("Your current Hostname : " + hostname);
+
+		} catch (UnknownHostException e) {
+			System.out.println("Unknown host");
+		}
 		request.setAttribute("ip", hostname );
-	    request.getRequestDispatcher("/index.jsp").forward(request, response);      		
+		request.getRequestDispatcher("/index.jsp").forward(request, response);      		
 	}
 
-	
+
 
 }

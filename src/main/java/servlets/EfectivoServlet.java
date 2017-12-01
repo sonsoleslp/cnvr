@@ -18,14 +18,14 @@ import clients.BankClient;
  */
 public class EfectivoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EfectivoServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public EfectivoServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -52,7 +52,7 @@ public class EfectivoServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String message = "Su operación se ha realizado con éxito";
 		HttpSession session = request.getSession();
-		 
+
 		BankClient bc = null;
 		if (ok == 1) {
 			if (operation.equals("ingresar")) {
@@ -71,19 +71,19 @@ public class EfectivoServlet extends HttpServlet {
 			request.setAttribute("msg", message);
 			request.setAttribute("icon", "remove");
 		}
-		
-		
-		 String hostname ="";
-		 InetAddress ip = null;
-	     try {
-	        ip = InetAddress.getLocalHost();
-	        hostname = ip.getHostName();
-	     } catch (UnknownHostException e) {}
-	     request.setAttribute("ip", hostname );
-	     
-	     
+
+
+		String hostname ="";
+		InetAddress ip = null;
+		try {
+			ip = InetAddress.getLocalHost();
+			hostname = ip.getHostName();
+		} catch (UnknownHostException e) {}
+		request.setAttribute("ip", hostname );
+
+
 		request.setAttribute("msg", message);
-	    request.getRequestDispatcher("/results.jsp").forward(request, response);      		
+		request.getRequestDispatcher("/results.jsp").forward(request, response);      		
 	}
 
 }

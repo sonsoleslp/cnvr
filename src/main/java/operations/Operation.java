@@ -39,7 +39,7 @@ public class Operation implements Serializable {
 	 * Lista de clientes del banco
 	 */
 	private List<BankClient> list;
-	
+
 	/**
 	 * Constructor
 	 * @param operation Tipo de operación
@@ -57,7 +57,7 @@ public class Operation implements Serializable {
 		this.other = other;
 		this.list = null;
 	}
-	
+
 	/**
 	 * Constructor alternativo
 	 * @param operation Tipo de operación
@@ -71,7 +71,7 @@ public class Operation implements Serializable {
 		this.other = 0L;
 		this.list = list;
 	}
-	
+
 	/**
 	 * Getter del tipo de operación
 	 * @return Tipo de operación
@@ -167,7 +167,7 @@ public class Operation implements Serializable {
 	public void setList(List<BankClient> list) {
 		this.list = list;
 	}
-	
+
 	/**
 	 * Getter del znode de origen de la operación
 	 * @return Id del znode
@@ -191,12 +191,12 @@ public class Operation implements Serializable {
 	 * @throws IOException Error de conversión
 	 */
 	public static byte[] serialize(Object obj) throws IOException {
-	    ByteArrayOutputStream out = new ByteArrayOutputStream();
-	    ObjectOutputStream os = new ObjectOutputStream(out);
-	    os.writeObject(obj);
-	    return out.toByteArray();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		ObjectOutputStream os = new ObjectOutputStream(out);
+		os.writeObject(obj);
+		return out.toByteArray();
 	}
-	
+
 	/**
 	 * Deserializador del objeto
 	 * @param data Array de bytes a deserializar
@@ -205,9 +205,9 @@ public class Operation implements Serializable {
 	 * @throws ClassNotFoundException Clase Operation no encontrada
 	 */
 	public static Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
-	    ByteArrayInputStream in = new ByteArrayInputStream(data);
-	    ObjectInputStream is = new ObjectInputStream(in);
-	    return is.readObject();
+		ByteArrayInputStream in = new ByteArrayInputStream(data);
+		ObjectInputStream is = new ObjectInputStream(in);
+		return is.readObject();
 	}
 
 	/**
@@ -219,8 +219,8 @@ public class Operation implements Serializable {
 				+ balance + ", other=" + other + ", list=" + list + "]";
 	}
 
-	
 
-	
-	
+
+
+
 }
