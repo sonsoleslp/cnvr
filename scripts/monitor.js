@@ -1,52 +1,89 @@
 var http = require('http');
 var exec = require('child_process').exec;
-var URLS = ["http://localhost:8081", "http://localhost:3001",  "http://localhost:3002",  "http://localhost:3003"];
-var NAMES = ["LOAD BALANCER", "WEB1", "WEB2", "WEB3"];
-var VMS = ["haproxy", "cnvr1", "cnvr2", "cnvr3"];
-var status = [true, true, true, true];
+var URL = "http://localhost:"
+var services = {
+		"haproxy": ["8081"],
+		"cnvr1": ["3001"],
+		"cnvr2": ["3002"],
+		"cnvr3": ["3003"]//,
+//		"zk":["2181","2182","2183"]
+};
+
+var status = {
+		"haproxy":true,
+		"cnvr1": true,
+		"cnvr2": true,
+//		"cnvr3": true,
+//		"zk": true
+};
+
 
 
 /**
  * Checks if the given URLs are up
  */
 var checkService = function() {
-	for (var url in URLS) {
-		this.url = url;
-		http.get(URLS[url], function (res) {
-
-		   console.log(NAMES[this.url] + " is up: ", res.statusCode, "\n");
-		   status[this.url] = true;
-
-		}.bind({url})).on('error', function(e) {
-			
-			if (status[this.url] === true ) {
-				// If they are down for the first time: attempt to reload vm
-			 	status[this.url] = false;
-			 	
-				console.log(NAMES[this.url] + " is down. Attempting to restart.\n");
-
-			 	exec('vagrant reload ' + VMS[this.url] , function (error, stdout, stderr) {
-			 		console.log(stdout);
-				  	if (error !== null) {
-				    	console.log('exec error: ' + error);
-				  	}
-				});
-			
-			} else {
-				// If they are still down: do nothing 	
-				console.log(NAMES[this.url] + " still down.\n");
-			}
-		 
-		}.bind({url}));
+	for (var service in services){
+		for (var url in services[service]) {
+			this.url = url;
+			http.get(URL + services[service][url], function (res) {
+	
+			   console.log(this.service + " is up: ", res.statusCode, "\n");
+			   status[this.service] = true;
+	
+			}.bind({url,service})).on('error', function(e) {
+				console.log(e)
+				if (status[this.service] === true ) {
+					// If they are down for the first time: attempt to reload vm
+				 	status[this.service] = false;
+				 	
+					console.log(this.service + " is down. Attempting to restart.\n");
+					
+				 	exec('vagrant reload ' + this.service , function (error, stdout, stderr) {
+				 		console.log(stdout);
+					  	if (error !== null) {
+					    	console.log('exec error: ' + error);
+					  	}
+					});
+				
+				} else {
+					// If they are still down: do nothing 	
+					console.log(this.service + " still down.\n");
+				}
+			 
+			}.bind({url, service}));
+		}
 	}
 	 
 }
+
 
 
 /**
  * Calls function every 120 seconds
  * 
  */
+
+var TIMER = 12;
+checkService();
 setInterval(function(){
   checkService();
-}, 120000);
+}, TIMER * 1000);
+
+
+
+var counter = TIMER;
+
+
+/**
+ * Prints timeout log
+ */
+setInterval(function(){
+	process.stdout.write("\r\x1b[K")
+	counter--;
+	process.stdout.write( "Próximo chequeo en :  " + counter +"")
+	if (counter == 0) {
+		counter = TIMER;
+		process.stdout.write("\n\n");
+	}
+}, 1000);

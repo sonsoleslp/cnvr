@@ -148,8 +148,11 @@ public class BankDBImpl implements BankI {
 			System.out.println(all);
 			EntityManager em = EMFService.get().createEntityManager();
 			em.getTransaction().begin();
+			try {
 			em.createQuery("DELETE FROM BankClient").executeUpdate();
-
+			} catch(Exception e) {
+				System.out.println(e);
+			}
 			for (int i = 0; i < all.size(); i++) {
 				BankClient bc = all.get(i);
 				em.persist(bc);
@@ -184,12 +187,17 @@ public class BankDBImpl implements BankI {
 	@Override
 	public List<BankClient> lista(){
 		EntityManager em = EMFService.get().createEntityManager();
+		try {
 		Query q = em.createQuery("SELECT m FROM BankClient m");
 		@SuppressWarnings("unchecked")
 		List<BankClient> lista = new ArrayList <BankClient>(q.getResultList());
 		em.close();
 		System.out.println(lista);
 		return lista;
+		} catch(Exception e) {
+			return new ArrayList();
+		}
+		
 	}
 
 }

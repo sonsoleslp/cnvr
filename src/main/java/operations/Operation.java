@@ -36,10 +36,14 @@ public class Operation implements Serializable {
 	 */
 	private Long other;
 	/**
-	 * Lista de clientes del banco
+	 * Referencia de donde descargar la URL inicial
+	 */
+	private String dbRef;
+	/**
+	 * Lista de clientes
 	 */
 	private List<BankClient> list;
-
+	
 	/**
 	 * Constructor
 	 * @param operation Tipo de operación
@@ -55,9 +59,26 @@ public class Operation implements Serializable {
 		this.name = name;
 		this.balance = balance;
 		this.other = other;
+		this.dbRef = "";
 		this.list = null;
 	}
 
+	/**
+	 * Constructor alternativo
+	 * @param operation Tipo de operación
+	 * @param dbRef URL de la DB
+	 */
+	public Operation(Operations operation, String dbRef) {
+		this.operation = operation;
+		this.id = 0L;
+		this.name = "";
+		this.balance = 0;
+		this.other = 0L;
+		this.dbRef = dbRef;
+		this.list = null;
+	}
+	
+	
 	/**
 	 * Constructor alternativo
 	 * @param operation Tipo de operación
@@ -69,6 +90,7 @@ public class Operation implements Serializable {
 		this.name = "";
 		this.balance = 0;
 		this.other = 0L;
+		this.dbRef = "";
 		this.list = list;
 	}
 
@@ -153,19 +175,19 @@ public class Operation implements Serializable {
 	}
 
 	/**
-	 * Getter de la lista de clientes
-	 * @return Lista de clientes del banco
+	 * Getter de la URL de la DB del lider
+	 * @return URL
 	 */
-	public List<BankClient> getList() {
-		return list;
+	public String getdbRef() {
+		return dbRef;
 	}
 
 	/**
-	 * Setter de la lista de clientes
-	 * @param list Lista de clientes del banco
+	 * Setter de la URL de la DB del lider
+	 * @param dbRef URL
 	 */
-	public void setList(List<BankClient> list) {
-		this.list = list;
+	public void setdbRef(String dbRef) {
+		this.dbRef = dbRef;
 	}
 
 	/**
@@ -210,14 +232,25 @@ public class Operation implements Serializable {
 		return is.readObject();
 	}
 
+	public List<BankClient> getList() {
+		return list;
+	}
+
+	public void setList(List<BankClient> list) {
+		this.list = list;
+	}
+	
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
 		return "Operation [operation=" + operation + ", id=" + id + ", name=" + name + ", ip=" + src + ", balance="
-				+ balance + ", other=" + other + ", list=" + list + "]";
+				+ balance + ", list=" + list +", other=" + other + ", dbRef=" + dbRef + "]";
 	}
+
+
 
 
 

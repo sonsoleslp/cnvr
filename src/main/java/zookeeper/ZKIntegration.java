@@ -52,13 +52,14 @@ public class ZKIntegration implements Watcher {
 	/**
 	 * Operación vacía inicial con la que se inicializa el znode de Operaciones
 	 */
-	public static final Operation initialOperation = new Operation(Operations.ESTADO, null);
+	public static final Operation initialOperation = new Operation(Operations.ESTADO, "");
 
 	/**
 	 * Tamaño inicial de la lista de miembros de la vista
 	 */
 	public static int listSize = 0;
 
+	private static String url = "";
 
 	/**
 	 * Getter de la instancia de Zookeeper
@@ -155,6 +156,23 @@ public class ZKIntegration implements Watcher {
 
 	}
 
+	
+	/**
+	 * Devuelve la URL del servidor en la red privada más interna
+	 * @return URL
+	 */
+	public static String getUrl() {
+		return url;
+	}
+
+	/**
+	 * Especifica la URL del servidor en la red privada más interna
+	 * @param url URL
+	 */
+	public static void setUrl(String url) {
+		ZKIntegration.url = url;
+	}
+
 	/**
 	 * Process del Watcher. Maneja todos los eventos de los znodes.
 	 */
@@ -170,7 +188,8 @@ public class ZKIntegration implements Watcher {
 					boolean bool = newProcesses(); // Indica que se ha a�adido un nodo nuevo
 					// Si se ha añadido un nodo nuevo y soy el leader, le mando el valor al nodo nuevo
 					if (bool && myId.equals(PATH_ELECTION_ROOT + "/"  + idLeader())) { 
-						Operation op = new Operation(Operations.ESTADO, BankDBImpl.getInstance().lista());
+						p("Sending new state url" + ZKIntegration.getUrl());
+						Operation op = new Operation(Operations.ESTADO, ZKIntegration.getUrl());
 						String last = idlast();
 						Thread.sleep(5000);
 						zk.setData(PATH_ELECTION_ROOT + "/" + last,Operation.serialize(op),-1);

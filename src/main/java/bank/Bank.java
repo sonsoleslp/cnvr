@@ -1,6 +1,13 @@
 package bank;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+
 
 import clients.BankClient;
 import model.BankDBImpl;
@@ -112,16 +119,6 @@ public class Bank implements BankI {
 	}
 
 	/**
-	 * Envía la lista de clientes actual a una nueva sucursal bancaria 
-	 */
-	public void newSucursal() {
-		BankDBImpl dao = BankDBImpl.getInstance();
-		List<BankClient> list =  dao.lista();
-		Operation op = new Operation(Operations.ESTADO, list);
-		MsgHandler.send(op);
-	}
-
-	/**
 	 * Recibe una operación de Zookeeper y la convierte en una operación sobre la DB local
 	 * @param op Operación a realizar
 	 */
@@ -129,7 +126,56 @@ public class Bank implements BankI {
 		BankDBImpl dao = BankDBImpl.getInstance();
 		switch(op.getOperation()) {
 		case ESTADO:
-			dao.populate(op.getList());
+			
+			try {
+			// get DB http
+			URL url = new URL(op.getdbRef());
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+			
+			int responseCode = con.getResponseCode();
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " + responseCode);
+
+			
+			BufferedReader in = new BufferedReader(
+			        new InputStreamReader(con.getInputStream()));
+			
+			
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+		    try {
+		        byte[] chunk = new byte[4096];
+		        int bytesRead;
+		        InputStream stream = url.openStream();
+
+		        while ((bytesRead = stream.read(chunk)) > 0) {
+		            outputStream.write(chunk, 0, bytesRead);
+		        }
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+
+		    byte[] bytes = outputStream.toByteArray();
+ 		    Object data = Operation.deserialize(bytes);
+ 		    System.out.println("Received ESTADO");
+ 		    if (data instanceof Operation) {
+ 		    	List<BankClient> list = ((Operation) data).getList();
+ 		    	System.out.println(list);
+ 		    	dao.populate(list);
+
+ 		    } else {
+ 		    	System.out.println("fail");
+
+ 		    }
+			
+			in.close();
+ 
+ 			} catch(Exception e ) {
+				System.out.println(e);
+			}
+			
 			break;
 		case CREAR:
 			dao.crearCliente(op.getId(), op.getName(), op.getBalance());

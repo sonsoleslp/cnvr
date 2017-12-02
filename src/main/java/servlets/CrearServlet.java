@@ -1,8 +1,10 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import bank.Bank;
 import clients.BankClient;
-
+import operations.Operation;
+import operations.Operations;
 /**
  * Servlet implementation class CrearServlet
  */
@@ -66,5 +69,16 @@ public class CrearServlet extends HttpServlet {
 		request.getRequestDispatcher("/results.jsp").forward(request, response);       
 
 	}
+	
+	@Override
+	public void doGet(HttpServletRequest request, 
+			HttpServletResponse response)
+					throws ServletException, IOException {
+		List<BankClient> lista = Bank.getBank().lista();
+		OutputStream out = response.getOutputStream();  
+	    out.write(Operation.serialize((new Operation( Operations.ESTADO, lista))));  
+		
+	}
 
+	
 }

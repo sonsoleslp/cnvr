@@ -1,0 +1,8 @@
+# Zookeeper
+scripts/lab/zk-setup.sh
+# Web servers (uno en cada máquina). El primer arg es la URL del servidor zk al que se conectan, el segundo es la URL donde correrá el servidor
+scripts/lab/web-up.sh 172.28.11.2:2181 http://172.28.11.3:3000
+scripts/lab/web-up.sh 172.28.11.2:2182 http://172.28.11.4:3000
+scripts/lab/web-up.sh 172.28.11.2:2183 http://172.28.11.5:3000
+# Haproxy. URL de cada web server en orden
+scripts/lab/haproxy-setup.sh 172.28.128.3:3000 172.28.128.4:3000 172.28.128.5:3000

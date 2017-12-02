@@ -18,16 +18,23 @@ public class StartUpListener implements ServletContextListener {
 
 		System.out.println("App initialized");
 
-		String zkPort = System.getProperty("zk");
-		if (zkPort == null) {
-			zkPort = "2181";
+		String zkIP = System.getProperty("zkIP");
+		if (zkIP == null) {
+			zkIP = "172.28.11.2:2181";
 			System.out.println("ZK port not provided. Using 2181 by default");
 		} else {
-			System.out.println("Specified ZK port: " + zkPort);
+			System.out.println("Specified ZK port: " + zkIP);
 		}
+		
+		ZKIntegration.getInstance().init(zkIP);
 
-		ZKIntegration.getInstance().init("172.28.11.2:" + zkPort);
-
+		String url = System.getProperty("url");
+		if (url != null) {
+			ZKIntegration.setUrl(url+"/"+"crearcuenta");
+			
+		}
+		
+		System.out.println(zkIP + " " + url);
 	}
 
 	@Override
