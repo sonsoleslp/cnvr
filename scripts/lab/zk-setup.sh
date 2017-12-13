@@ -21,4 +21,8 @@ export PATH=$PATH:~/cnvr/zookeeper-3.4.10/bin
 ./bin/zkServer.sh start conf/zoo1.cfg
 ./bin/zkServer.sh start conf/zoo2.cfg
 ./bin/zkServer.sh start conf/zoo3.cfg
+sleep 5
+~/cnvr/zookeeper-3.4.10/bin/zkServer.sh status ~/cnvr/zookeeper-3.4.10/conf/zoo1.cfg 
+~/cnvr/zookeeper-3.4.10/bin/zkServer.sh status ~/cnvr/zookeeper-3.4.10/conf/zoo2.cfg 
+~/cnvr/zookeeper-3.4.10/bin/zkServer.sh status ~/cnvr/zookeeper-3.4.10/conf/zoo3.cfg 
  
