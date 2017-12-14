@@ -7,7 +7,7 @@ mkdir /tmp/1
 echo 1 > /tmp/1/myid
 
 cd ~/cnvr/zookeeper-3.4.10
-cp ~/cnvr/zk/zoo_sample.cfg conf/zoo_sample.cfg
+cp ~/cnvr/zk/zoo_sample2.cfg conf/zoo_sample2.cfg
 
 
 export CLASSPATH=$CLASSPATH:~/cnvr/zookeeper-3.4.10/zookeeper-3.4.10.jar
