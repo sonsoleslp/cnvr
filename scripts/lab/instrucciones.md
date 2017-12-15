@@ -13,6 +13,11 @@ cd cnvr
 	```
 	sh scripts/lab/zk-setup.sh
 	```
+2. Compruebo que funciona
+	```
+	sh scripts/lab/zk-status.sh
+	```
+
 ### Modo en 3 ordenadores distintos
 1. Modifico `zk/zoo_sample2.cfg`:
 	* Cambio `dataDir=/tmp/1` para que tenga el nº de servidor que me corresponde
