@@ -34,12 +34,12 @@ cd cnvr
 
 ## Servidores web
 1. Instalar maven
-```
-sh scripts/lab/install_maven.sh
-```
+	```
+	sh scripts/lab/install_maven.sh
+	```
 2. Ejecuto el comando siguiente :
-```
-sh scripts/lab/web-up.sh "138.4.31.104:2181" "http://138.4.31.102"
-```
-Donde la primera dirección es la del servidor zookeeper al que me quiero conectar y la segunda es la propia del servidor web
+	```
+	sh scripts/lab/web-up.sh "138.4.31.104:2181" "http://138.4.31.102"
+	```
+	donde la primera dirección es la del servidor zookeeper al que me quiero conectar y la segunda es la propia del servidor web
 
