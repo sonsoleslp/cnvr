@@ -12,8 +12,11 @@ echo 1 > sudo /proc/sys/net/ipv4/ip_forward
 sudo iptables -P FORWARD DROP
 sudo iptables -F FORWARD
 sudo iptables -t nat -F
-sudo iptables -t nat -A POSTROUTING -s 10.200.1.0/255.255.255.0 -o enp1s0 -j MASQUERADE
-sudo iptables -A FORWARD -i enp1s0 -o v-eth1 -j ACCEPT
-sudo iptables -A FORWARD -o enp1s0 -i v-eth1 -j ACCEPT
+sudo iptables -t nat -A POSTROUTING -s 10.200.1.0/255.255.255.0 -o enp2s0 -j MASQUERADE
+sudo iptables -A FORWARD -i enp2s0 -o v-eth1 -j ACCEPT
+sudo iptables -A FORWARD -o enp2s0 -i v-eth1 -j ACCEPT
 sudo ip netns exec ns1 bash
+apt-get update
+apt-get install maven
+exit
 
