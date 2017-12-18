@@ -33,7 +33,7 @@ cd cnvr
 	```
 
 ## Servidores web
-1. Instalar maven
+1. Instalar maven (cambiar en el script la interfaz enp2s0 por la que corresponda si es necesario)
 	```
 	sh scripts/lab/install_maven.sh
 	```
